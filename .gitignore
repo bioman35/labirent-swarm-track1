@@ -1,0 +1,10 @@
+# Labirent Swarm track 1 depo
+# luna/gizli: Luna yargic yer gercegi, 8 Kasim'dan once depoya girmez
+oyun_alani_v4/luna/gizli/
+**/luna/gizli/
+__pycache__/
+*.pyc
+# anahtar dosyalari (Desktop\api) hicbir zaman depoya girmez
+api/
+*.key
+.env

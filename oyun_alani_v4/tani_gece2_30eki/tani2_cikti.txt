@@ -1,0 +1,17 @@
+(a) kisa: {"kod":"ZEBRA41"} | tasan: {"kod":"bekle" } | sayilan 3959 gercek 5580
+v4_kosu1_O1_O2b_t7       is False tur  40 takildi T1         durdu -                cagri   92 gecersiz   0   585.6 sn
+bitti · 1 kosu · C:\Users\MONSTER\AppData\Local\Temp\claude\c--Users-MONSTER-Triamind-App\a04217b9-e26f-4d22-badf-e2f8e65b262e\scratchpad\tani2_m7
+(b) cagri 92 tasan (karakterden, 1 kr=0.523 tok): 33 sayilan<gercek tahmini fark>200: 33
+v4_kosu1_O1_O2b_t6       is False tur  40 takildi T1,T2      durdu {'T3': 'TURUNCU'} cagri  
+v4_kosu1_O1_O2b_t7       is False tur  40 takildi T1,T2      durdu -                cagri  1
+v4_kosu1_O1_O2b_t8       is False tur  40 takildi T1         durdu -                cagri   
+v4_kosu1_O1_O2b_t9       is False tur  40 takildi T1         durdu -                cagri   
+v4_kosu1_O1_O2b_t10      is False tur  40 takildi T2         durdu -                cagri   
+v4_kosu1_O1_O2b_t11      is False tur  40 takildi T1         durdu -                cagri   
+v4_kosu1_O1_O2b_t12      is False tur  25 takildi T1         durdu -                cagri   
+v4_kosu1_O1_O2b_t13      is False tur  41 takildi T1,T3,T2   durdu -                cagri  1
+v4_kosu1_O1_O2b_t14      is False tur  40 takildi T1         durdu -                cagri   
+v4_kosu1_O1_O2b_t15      is False tur   9 takildi -          durdu -                cagri   
+TANI2 BITTI
+
+[exited with code 0]

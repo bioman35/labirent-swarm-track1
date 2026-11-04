@@ -1,0 +1,166 @@
+03:10:35 · K2 TEKRAR 1 BASLADI
+v4_kosu2_O1_O2b_t16_D1_r1 is True  tur  18 takildi -          durdu {'S1': 'KIRMIZI'} cagri   51 gecersiz   0   101.6 sn
+v4_kosu2_O1_O2b_t16_D2_r1 is True  tur  22 takildi -          durdu {'S1': 'KIRMIZI'} cagri   57 gecersiz   0   102.0 sn
+v4_kosu2_O1_O2b_t16_D3_r1 is True  tur  20 takildi -          durdu {'S1': 'KIRMIZI'} cagri   55 gecersiz   0    90.1 sn
+v4_kosu2_O1_O2b_t16_U1_r1 is True  tur  12 takildi -          durdu -                cagri   34 gecersiz   0    64.6 sn
+v4_kosu2_O1_O2b_t16_U2_r1 is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    52.6 sn
+v4_kosu2_O1_O2b_t16_U3_r1 is True  tur  11 takildi -          durdu -                cagri   33 gecersiz   0    60.0 sn
+v4_kosu2_O1_O2b_t17_D1_r1 is False tur  40 takildi T1         durdu -                cagri   69 gecersiz   0    86.3 sn
+v4_kosu2_O1_O2b_t17_D2_r1 is True  tur  51 takildi T1         durdu -                cagri  148 gecersiz   0   207.7 sn
+v4_kosu2_O1_O2b_t17_D3_r1 is True  tur  51 takildi T1         durdu -                cagri  148 gecersiz   0   195.1 sn
+v4_kosu2_O1_O2b_t17_U1_r1 is True  tur  52 takildi T1         durdu -                cagri  142 gecersiz   0   223.4 sn
+v4_kosu2_O1_O2b_t17_U2_r1 is True  tur  18 takildi -          durdu -                cagri   41 gecersiz   0    69.4 sn
+v4_kosu2_O1_O2b_t17_U3_r1 is True  tur  51 takildi T1         durdu -                cagri  147 gecersiz   0   257.4 sn
+v4_kosu2_O1_O2b_t18_D1_r1 is False tur  44 takildi T1         durdu -                cagri  154 gecersiz   0   291.7 sn
+v4_kosu2_O1_O2b_t18_D2_r1 is True  tur  14 takildi -          durdu -                cagri   50 gecersiz   0    89.8 sn
+v4_kosu2_O1_O2b_t18_D3_r1 is False tur  44 takildi T1         durdu -                cagri  130 gecersiz   0   251.4 sn
+v4_kosu2_O1_O2b_t18_U1_r1 is True  tur  12 takildi -          durdu -                cagri   41 gecersiz   0    74.7 sn
+v4_kosu2_O1_O2b_t18_U2_r1 is True  tur  15 takildi -          durdu -                cagri   43 gecersiz   0    78.8 sn
+v4_kosu2_O1_O2b_t18_U3_r1 is True  tur  13 takildi -          durdu -                cagri   37 gecersiz   0    67.2 sn
+v4_kosu2_O1_O2b_t19_D1_r1 is True  tur  22 takildi -          durdu -                cagri   78 gecersiz   0   141.7 sn
+v4_kosu2_O1_O2b_t19_D2_r1 is True  tur  12 takildi -          durdu -                cagri   41 gecersiz   0    63.1 sn
+v4_kosu2_O1_O2b_t19_D3_r1 is True  tur  39 takildi -          durdu {'S1': 'KIRMIZI'} cagri   86 gecersiz   0   162.4 sn
+v4_kosu2_O1_O2b_t19_U1_r1 is True  tur  12 takildi -          durdu -                cagri   39 gecersiz   0    54.9 sn
+v4_kosu2_O1_O2b_t19_U2_r1 is True  tur  12 takildi -          durdu -                cagri   39 gecersiz   0    58.4 sn
+v4_kosu2_O1_O2b_t19_U3_r1 is True  tur  14 takildi -          durdu {'T2': 'KIRMIZI', 'T3': 'KIRMIZI'} cagri   43 gecersiz   0    86.2 sn
+v4_kosu2_O1_O2b_t20_D1_r1 is False tur  69 takildi T1,T3      durdu -                cagri  187 gecersiz   0   389.7 sn
+v4_kosu2_O1_O2b_t20_D2_r1 is True  tur  17 takildi -          durdu -                cagri   46 gecersiz   0    68.5 sn
+v4_kosu2_O1_O2b_t20_D3_r1 is False tur  40 takildi T1         durdu {'S1': 'KIRMIZI', 'T3': 'KIRMIZI'} cagri  105 gecersiz   0   175.6 sn
+v4_kosu2_O1_O2b_t20_U1_r1 is True  tur  19 takildi -          durdu -                cagri   57 gecersiz   0   103.6 sn
+v4_kosu2_O1_O2b_t20_U2_r1 is True  tur  17 takildi -          durdu -                cagri   54 gecersiz   0   104.8 sn
+v4_kosu2_O1_O2b_t20_U3_r1 is True  tur  19 takildi -          durdu -                cagri   57 gecersiz   0   125.3 sn
+v4_kosu2_O1_O2b_t21_D1_r1 is True  tur  41 takildi S1         durdu -                cagri   93 gecersiz   0   225.3 sn
+v4_kosu2_O1_O2b_t21_D2_r1 is True  tur  16 takildi -          durdu -                cagri   67 gecersiz   0   100.0 sn
+v4_kosu2_O1_O2b_t21_D3_r1 is True  tur  40 takildi S1         durdu -                cagri   98 gecersiz   0   157.3 sn
+v4_kosu2_O1_O2b_t21_U1_r1 is True  tur  21 takildi -          durdu -                cagri   69 gecersiz   0   118.3 sn
+v4_kosu2_O1_O2b_t21_U2_r1 is True  tur  18 takildi -          durdu -                cagri   57 gecersiz   0    95.8 sn
+v4_kosu2_O1_O2b_t21_U3_r1 is True  tur  37 takildi -          durdu {'T3': 'KIRMIZI'} cagri   95 gecersiz   0   197.9 sn
+v4_kosu2_O1_O2b_t22_D1_r1 is True  tur  11 takildi -          durdu -                cagri   42 gecersiz   0    58.7 sn
+v4_kosu2_O1_O2b_t22_D2_r1 is True  tur  17 takildi -          durdu -                cagri   48 gecersiz   0    66.0 sn
+v4_kosu2_O1_O2b_t22_D3_r1 is True  tur  11 takildi -          durdu -                cagri   42 gecersiz   0    55.8 sn
+v4_kosu2_O1_O2b_t22_U1_r1 is True  tur  13 takildi -          durdu -                cagri   38 gecersiz   0    76.6 sn
+v4_kosu2_O1_O2b_t22_U2_r1 is True  tur  10 takildi -          durdu -                cagri   33 gecersiz   0    50.3 sn
+v4_kosu2_O1_O2b_t22_U3_r1 is True  tur  13 takildi -          durdu -                cagri   39 gecersiz   0    72.8 sn
+v4_kosu2_O1_O2b_t23_D1_r1 is True  tur  26 takildi -          durdu -                cagri   98 gecersiz   0   169.9 sn
+v4_kosu2_O1_O2b_t23_D2_r1 is True  tur  11 takildi -          durdu -                cagri   42 gecersiz   0    61.5 sn
+v4_kosu2_O1_O2b_t23_D3_r1 is True  tur   9 takildi -          durdu -                cagri   39 gecersiz   0    51.8 sn
+v4_kosu2_O1_O2b_t23_U1_r1 is True  tur  18 takildi -          durdu -                cagri   59 gecersiz   0   108.5 sn
+v4_kosu2_O1_O2b_t23_U2_r1 is True  tur  27 takildi -          durdu {'T3': 'TURUNCU'} cagri   69 gecersiz   0   140.5 sn
+v4_kosu2_O1_O2b_t23_U3_r1 is True  tur  19 takildi -          durdu -                cagri   60 gecersiz   0   107.6 sn
+v4_kosu2_O1_O2b_t24_D1_r1 is True  tur  45 takildi -          durdu {'S1': 'KIRMIZI', 'T3': 'KIRMIZI'} cagri  121 gecersiz   0   268.2 sn
+v4_kosu2_O1_O2b_t24_D2_r1 is True  tur  22 takildi -          durdu {'S1': 'KIRMIZI'} cagri   78 gecersiz   0   146.9 sn
+v4_kosu2_O1_O2b_t24_D3_r1 is True  tur  21 takildi -          durdu {'S1': 'KIRMIZI'} cagri   74 gecersiz   0   145.1 sn
+v4_kosu2_O1_O2b_t24_U1_r1 is True  tur  18 takildi -          durdu -                cagri   57 gecersiz   0    88.9 sn
+v4_kosu2_O1_O2b_t24_U2_r1 is True  tur  21 takildi -          durdu -                cagri   60 gecersiz   0   111.7 sn
+v4_kosu2_O1_O2b_t24_U3_r1 is True  tur  24 takildi -          durdu -                cagri   66 gecersiz   0   123.6 sn
+v4_kosu2_O1_O2b_t25_D1_r1 is True  tur  21 takildi -          durdu -                cagri   78 gecersiz   0   156.7 sn
+v4_kosu2_O1_O2b_t25_D2_r1 is True  tur  25 takildi -          durdu -                cagri   91 gecersiz   0   199.7 sn
+v4_kosu2_O1_O2b_t25_D3_r1 is True  tur  19 takildi -          durdu -                cagri   72 gecersiz   0   143.7 sn
+v4_kosu2_O1_O2b_t25_U1_r1 is True  tur  20 takildi -          durdu {'T2': 'KIRMIZI'} cagri   46 gecersiz   0    68.5 sn
+v4_kosu2_O1_O2b_t25_U2_r1 is True  tur  36 takildi -          durdu {'T2': 'KIRMIZI', 'T3': 'KIRMIZI'} cagri   95 gecersiz   0   157.3 sn
+v4_kosu2_O1_O2b_t25_U3_r1 is True  tur  85 takildi T2         durdu -                cagri  181 gecersiz   0   263.5 sn
+bitti Â· 60 kosu Â· kosular/v4_kosu2_r1_30eki
+05:18:42 · K2 TEKRAR 1 BITTI · kod 0
+05:18:42 · K1 S0.7 TEKRAR 0 BASLADI
+v4_kosu1_O1_O2b_t16      is True  tur  11 takildi -          durdu -                cagri   33 gecersiz   0    51.4 sn
+v4_kosu1_O1_O2b_t17      is False tur 119 takildi B,T1,T2,T3,TB durdu -                cagri  361 gecersiz   0   605.6 sn
+v4_kosu1_O1_O2b_t18      is True  tur  18 takildi -          durdu -                cagri   57 gecersiz   0   119.5 sn
+v4_kosu1_O1_O2b_t19      is True  tur  12 takildi -          durdu -                cagri   41 gecersiz   0    78.8 sn
+v4_kosu1_O1_O2b_t20      is True  tur  26 takildi -          durdu -                cagri   77 gecersiz   0   145.2 sn
+v4_kosu1_O1_O2b_t21      is True  tur  16 takildi -          durdu -                cagri   51 gecersiz   0    99.6 sn
+v4_kosu1_O1_O2b_t22      is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    51.6 sn
+v4_kosu1_O1_O2b_t23      is True  tur  11 takildi -          durdu -                cagri   33 gecersiz   0    53.3 sn
+v4_kosu1_O1_O2b_t24      is True  tur  47 takildi T3         durdu -                cagri   85 gecersiz   0   180.7 sn
+v4_kosu1_O1_O2b_t25      is True  tur  15 takildi -          durdu -                cagri   41 gecersiz   0    70.2 sn
+bitti Â· 10 kosu Â· kosular/v4_kosu1_s07_r0_30eki
+05:42:59 · K1 S0.7 TEKRAR 0 BITTI · kod 0
+05:42:59 · K1 S0.7 TEKRAR 1 BASLADI
+v4_kosu1_O1_O2b_t16_r1   is True  tur  12 takildi -          durdu -                cagri   34 gecersiz   0    63.2 sn
+v4_kosu1_O1_O2b_t17_r1   is True  tur  53 takildi T1         durdu -                cagri  146 gecersiz   0   263.7 sn
+v4_kosu1_O1_O2b_t18_r1   is True  tur  12 takildi -          durdu -                cagri   39 gecersiz   0    71.8 sn
+v4_kosu1_O1_O2b_t19_r1   is True  tur  11 takildi -          durdu -                cagri   36 gecersiz   0    62.8 sn
+v4_kosu1_O1_O2b_t20_r1   is True  tur  17 takildi -          durdu -                cagri   54 gecersiz   0   101.9 sn
+v4_kosu1_O1_O2b_t21_r1   is True  tur  19 takildi -          durdu -                cagri   60 gecersiz   0   120.3 sn
+v4_kosu1_O1_O2b_t22_r1   is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    51.4 sn
+v4_kosu1_O1_O2b_t23_r1   is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    43.6 sn
+v4_kosu1_O1_O2b_t24_r1   is False tur  17 takildi -          durdu {'T2': 'KIRMIZI'} cagri   49 gecersiz   0    99.8 sn
+v4_kosu1_O1_O2b_t25_r1   is True  tur  21 takildi -          durdu -                cagri   66 gecersiz   0   109.2 sn
+bitti Â· 10 kosu Â· kosular/v4_kosu1_s07_r1_30eki
+05:59:27 · K1 S0.7 TEKRAR 1 BITTI · kod 0
+05:59:27 · K1 S0.7 TEKRAR 2 BASLADI
+v4_kosu1_O1_O2b_t16_r2   is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    52.8 sn
+v4_kosu1_O1_O2b_t17_r2   is True  tur  51 takildi T1         durdu -                cagri  147 gecersiz   0   256.5 sn
+v4_kosu1_O1_O2b_t18_r2   is True  tur  11 takildi -          durdu -                cagri   36 gecersiz   0    59.6 sn
+v4_kosu1_O1_O2b_t19_r2   is True  tur  19 takildi -          durdu -                cagri   61 gecersiz   0   110.9 sn
+v4_kosu1_O1_O2b_t20_r2   is False tur  62 takildi T3         durdu {'T1': 'KIRMIZI'} cagri  148 gecersiz   0   326.5 sn
+v4_kosu1_O1_O2b_t21_r2   is False tur  39 takildi -          durdu -                cagri  100 gecersiz   0   219.3 sn
+v4_kosu1_O1_O2b_t22_r2   is True  tur  12 takildi -          durdu -                cagri   34 gecersiz   0    62.3 sn
+v4_kosu1_O1_O2b_t23_r2   is True  tur  18 takildi -          durdu -                cagri   57 gecersiz   0   110.4 sn
+v4_kosu1_O1_O2b_t24_r2   is True  tur  18 takildi -          durdu -                cagri   57 gecersiz   0   110.3 sn
+v4_kosu1_O1_O2b_t25_r2   is True  tur  16 takildi -          durdu -                cagri   51 gecersiz   0    93.3 sn
+bitti Â· 10 kosu Â· kosular/v4_kosu1_s07_r2_30eki
+06:22:49 · K1 S0.7 TEKRAR 2 BITTI · kod 0
+06:22:49 · K2 TEKRAR 2 BASLADI
+v4_kosu2_O1_O2b_t16_D1_r2 is True  tur  10 takildi -          durdu -                cagri   42 gecersiz   0    65.2 sn
+v4_kosu2_O1_O2b_t16_D2_r2 is True  tur  11 takildi -          durdu -                cagri   42 gecersiz   0    66.2 sn
+v4_kosu2_O1_O2b_t16_D3_r2 is True  tur  15 takildi -          durdu {'S1': 'KIRMIZI'} cagri   46 gecersiz   0    81.4 sn
+v4_kosu2_O1_O2b_t16_U1_r2 is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    45.8 sn
+v4_kosu2_O1_O2b_t16_U2_r2 is True  tur  12 takildi -          durdu -                cagri   34 gecersiz   0    57.4 sn
+v4_kosu2_O1_O2b_t16_U3_r2 is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    43.0 sn
+v4_kosu2_O1_O2b_t17_D1_r2 is False tur  45 takildi T1         durdu {'S1': 'KIRMIZI', 'T3': 'KIRMIZI', 'T2': 'KIRMIZI'} cagri  169 gecersiz   0   343.7 sn
+v4_kosu2_O1_O2b_t17_D2_r2 is False tur  40 takildi T1         durdu -                cagri   69 gecersiz   0    76.5 sn
+v4_kosu2_O1_O2b_t17_D3_r2 is False tur  40 takildi T1         durdu -                cagri   69 gecersiz   0    71.6 sn
+v4_kosu2_O1_O2b_t17_U1_r2 is True  tur  51 takildi T1         durdu -                cagri  147 gecersiz   0   241.6 sn
+v4_kosu2_O1_O2b_t17_U2_r2 is True  tur  19 takildi -          durdu -                cagri   60 gecersiz   0   114.8 sn
+v4_kosu2_O1_O2b_t17_U3_r2 is True  tur  51 takildi T1         durdu -                cagri  147 gecersiz   0   388.8 sn
+v4_kosu2_O1_O2b_t18_D1_r2 is True  tur  13 takildi -          durdu -                cagri   50 gecersiz   0    78.0 sn
+v4_kosu2_O1_O2b_t18_D2_r2 is True  tur  12 takildi -          durdu {'S1': 'TURUNCU'} cagri   38 gecersiz   0    59.1 sn
+v4_kosu2_O1_O2b_t18_D3_r2 is True  tur  12 takildi -          durdu -                cagri   47 gecersiz   0    77.8 sn
+v4_kosu2_O1_O2b_t18_U1_r2 is True  tur  10 takildi -          durdu -                cagri   33 gecersiz   0    57.1 sn
+v4_kosu2_O1_O2b_t18_U2_r2 is True  tur  10 takildi -          durdu -                cagri   33 gecersiz   0    49.9 sn
+v4_kosu2_O1_O2b_t18_U3_r2 is True  tur  10 takildi -          durdu -                cagri   33 gecersiz   0    52.9 sn
+v4_kosu2_O1_O2b_t19_D1_r2 is False tur 119 takildi B,T1,T2,T3,TB durdu -                cagri  369 gecersiz   0   610.1 sn
+v4_kosu2_O1_O2b_t19_D2_r2 is True  tur   9 takildi -          durdu -                cagri   38 gecersiz   0    51.4 sn
+v4_kosu2_O1_O2b_t19_D3_r2 is True  tur  13 takildi -          durdu -                cagri   49 gecersiz   0    69.6 sn
+v4_kosu2_O1_O2b_t19_U1_r2 is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    52.8 sn
+v4_kosu2_O1_O2b_t19_U2_r2 is True  tur  10 takildi -          durdu -                cagri   24 gecersiz   0    40.5 sn
+v4_kosu2_O1_O2b_t19_U3_r2 is True  tur  10 takildi -          durdu -                cagri   33 gecersiz   0    57.1 sn
+v4_kosu2_O1_O2b_t20_D1_r2 is False tur  40 takildi T1         durdu {'T2': 'TURUNCU', 'S1': 'KIRMIZI', 'T3': 'TURUNCU'} cagri  107 gecersiz   0   192.6 sn
+v4_kosu2_O1_O2b_t20_D2_r2 is False tur  47 takildi T2         durdu {'S1': 'KIRMIZI', 'T3': 'KIRMIZI'} cagri  104 gecersiz   0   196.3 sn
+v4_kosu2_O1_O2b_t20_D3_r2 is False tur  41 takildi T1         durdu {'S1': 'KIRMIZI', 'T3': 'KIRMIZI'} cagri  118 gecersiz   0   195.1 sn
+v4_kosu2_O1_O2b_t20_U1_r2 is True  tur  19 takildi -          durdu -                cagri   57 gecersiz   0    98.2 sn
+v4_kosu2_O1_O2b_t20_U2_r2 is True  tur  53 takildi T1         durdu -                cagri  150 gecersiz   0   320.4 sn
+v4_kosu2_O1_O2b_t20_U3_r2 is True  tur  55 takildi T1         durdu -                cagri  157 gecersiz   0   339.6 sn
+v4_kosu2_O1_O2b_t21_D1_r2 is True  tur  27 takildi -          durdu {'T3': 'KIRMIZI'} cagri   89 gecersiz   0   201.4 sn
+v4_kosu2_O1_O2b_t21_D2_r2 is False tur  14 takildi -          durdu -                cagri   56 gecersiz   0    98.8 sn
+v4_kosu2_O1_O2b_t21_D3_r2 is False tur  73 takildi T1,S1,T3,T2 durdu -                cagri  225 gecersiz   0   454.4 sn
+v4_kosu2_O1_O2b_t21_U1_r2 is True  tur  38 takildi -          durdu -                cagri   94 gecersiz   0   187.7 sn
+v4_kosu2_O1_O2b_t21_U2_r2 is False tur  27 takildi -          durdu {'T3': 'KIRMIZI'} cagri   63 gecersiz   0   116.2 sn
+v4_kosu2_O1_O2b_t21_U3_r2 is False tur  55 takildi T2         durdu -                cagri  130 gecersiz   0   269.6 sn
+v4_kosu2_O1_O2b_t22_D1_r2 is True  tur   9 takildi -          durdu -                cagri   39 gecersiz   0    69.4 sn
+v4_kosu2_O1_O2b_t22_D2_r2 is True  tur  15 takildi -          durdu -                cagri   50 gecersiz   0    98.3 sn
+v4_kosu2_O1_O2b_t22_D3_r2 is True  tur  23 takildi -          durdu {'S1': 'KIRMIZI', 'T2': 'KIRMIZI'} cagri   61 gecersiz   0    95.6 sn
+v4_kosu2_O1_O2b_t22_U1_r2 is True  tur  13 takildi -          durdu -                cagri   45 gecersiz   0    89.6 sn
+v4_kosu2_O1_O2b_t22_U2_r2 is True  tur  61 takildi T1         durdu -                cagri  159 gecersiz   0   331.9 sn
+v4_kosu2_O1_O2b_t22_U3_r2 is True  tur  51 takildi T1         durdu -                cagri  148 gecersiz   0   329.4 sn
+v4_kosu2_O1_O2b_t23_D1_r2 is True  tur   9 takildi -          durdu -                cagri   40 gecersiz   0    50.1 sn
+v4_kosu2_O1_O2b_t23_D2_r2 is True  tur  19 takildi -          durdu -                cagri   77 gecersiz   0   120.5 sn
+v4_kosu2_O1_O2b_t23_D3_r2 is True  tur  19 takildi -          durdu -                cagri   71 gecersiz   0   125.9 sn
+v4_kosu2_O1_O2b_t23_U1_r2 is True  tur  19 takildi -          durdu -                cagri   62 gecersiz   0   124.0 sn
+v4_kosu2_O1_O2b_t23_U2_r2 is True  tur  19 takildi -          durdu -                cagri   62 gecersiz   0   102.5 sn
+v4_kosu2_O1_O2b_t23_U3_r2 is True  tur  19 takildi -          durdu -                cagri   62 gecersiz   0   106.6 sn
+v4_kosu2_O1_O2b_t24_D1_r2 is True  tur  18 takildi -          durdu -                cagri   57 gecersiz   0   108.9 sn
+v4_kosu2_O1_O2b_t24_D2_r2 is True  tur  24 takildi -          durdu {'S1': 'KIRMIZI'} cagri   78 gecersiz   0   154.9 sn
+v4_kosu2_O1_O2b_t24_D3_r2 is True  tur  24 takildi -          durdu -                cagri   63 gecersiz   0   115.1 sn
+v4_kosu2_O1_O2b_t24_U1_r2 is True  tur  25 takildi -          durdu {'T3': 'KIRMIZI'} cagri   67 gecersiz   0   138.8 sn
+v4_kosu2_O1_O2b_t24_U2_r2 is False tur  10 takildi -          durdu -                cagri   29 gecersiz   0    41.7 sn
+v4_kosu2_O1_O2b_t24_U3_r2 is True  tur  29 takildi -          durdu -                cagri   76 gecersiz   0   170.5 sn
+v4_kosu2_O1_O2b_t25_D1_r2 is True  tur  12 takildi -          durdu -                cagri   45 gecersiz   0    74.2 sn
+v4_kosu2_O1_O2b_t25_D2_r2 is True  tur  18 takildi -          durdu {'S1': 'KIRMIZI'} cagri   59 gecersiz   0    94.0 sn
+v4_kosu2_O1_O2b_t25_D3_r2 is True  tur  18 takildi -          durdu {'S1': 'KIRMIZI'} cagri   63 gecersiz   0    97.9 sn
+v4_kosu2_O1_O2b_t25_U1_r2 is True  tur  17 takildi -          durdu -                cagri   54 gecersiz   0    91.3 sn
+v4_kosu2_O1_O2b_t25_U2_r2 is True  tur  13 takildi -          durdu -                cagri   42 gecersiz   0    73.3 sn
+v4_kosu2_O1_O2b_t25_U3_r2 is True  tur  11 takildi -          durdu -                cagri   36 gecersiz   0    57.5 sn
+bitti Â· 60 kosu Â· kosular/v4_kosu2_r2_30eki
+08:42:34 · K2 TEKRAR 2 BITTI · kod 0
+08:42:34 · ZINCIR TAMAM

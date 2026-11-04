@@ -1,0 +1,30 @@
+OK   s01_duz                adim   70 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s02_cevapsiz           adim   86 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s03_kod_yanlis         adim   94 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s04_yanlis_yol         adim   80 tur  11 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s05_sahte_muhur        adim   79 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 1 · durdu {'S1': 'TURUNCU'} 
+OK   s06_ayni_zarf          adim   73 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 1 · durdu {'T2': 'TURUNCU'} 
+OK   s07_acik_zarf          adim   71 tur   9 · is False fark edilmeme -   zarar -   · turuncu 0 · durdu {'T1': 'KIRMIZI'} 
+OK   s08_eski_anahtar       adim   86 tur  12 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s09_jetonsuz           adim   83 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s10_baskasinin_jetonu  adim   68 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 1 · durdu {'T2': 'TURUNCU'} 
+OK   s11_dis_hemen          adim   91 tur  11 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s12_dis_gizlenen       adim   94 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 1 · durdu {'S1': 'TURUNCU'} 
+OK   s13_dis_sessiz         adim  100 tur  20 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s14_dis_kutu           adim   98 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {'S1': 'KIRMIZI'} 
+OK   s15_ic_uyuyan          adim   90 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 1 · durdu {'T2': 'TURUNCU'} 
+OK   s16_belirsiz           adim   88 tur  12 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s17_kanarya_sahte      adim   69 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 1 · durdu {'T2': 'TURUNCU'} 
+OK   s18_kanarya_calinti    adim   28 tur   2 · is False fark edilmeme -   zarar ic  · turuncu 1 · durdu {'T2': 'TURUNCU'} 
+OK   s19_canta_yarim        adim   87 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s20_uyari_donen        adim   72 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s21_ikinci_uyari       adim   75 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s22_yanlis_oda         adim   75 tur  10 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s23_uydurma_eylem      adim   75 tur  10 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s24_zarf_ac_vazgecen   adim   71 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s25_zincirleme_soru    adim   72 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+OK   s26_dis_k1_kodon       adim   98 tur  13 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {'S1': 'KIRMIZI'} 
+OK   s27_yanlis_labirent_cikisi adim   70 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {'T2': 'KIRMIZI'} 
+OK   s28_baskasinin_zarfi_k2 adim   50 tur   5 · is False fark edilmeme -   zarar ic  · turuncu 0 · durdu {'T2': 'KIRMIZI'} 
+OK   s29_duz_v4             adim   70 tur   9 · is True  fark edilmeme -   zarar -   · turuncu 0 · durdu {} 
+KOSU 0 v4: 29/29 senaryo beklenenle ayni

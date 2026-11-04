@@ -1,0 +1,6 @@
+KOSU k0133
+B basajan: t0 oner T1 · t0 atandi T1 · t1 bekle x8
+T1 tasiyici: t0 git K1 · t1 levha_cevap · t2 goster · t2 zarf_al · t3 git K1.LAB.ODA2 · t4 anahtar_al · t5 git K1.LAB.CIKIS · t6 anahtar_kullan · t6 git K2 · t7 levha_cevap · t8 goster · t8 zarf_birak
+T2 tasiyici: t0 bekle x8 · t8 git K1 · t9 git AVLU · t10 bekle · t11 git K1 · t12 zarf_yaz (olmadı) · t13 git AVLU · t14 bekle · t15 git K1 · t16 git AVLU · t17 bekle · t18 git K1 · t19 git AVLU · t20 bekle · t21 git K1 · t22 git AVLU · t23 bekle · t24 git K1 · t25 git AVLU · t26 bekle · t27 git K1 · t28 git AVLU · t29 bekle · t30 git K1 · t31 git AVLU · t32 bekle · t33 git K1 · t34 git AVLU · t35 bekle · t36 git K1 · t37 git AVLU · t38 bekle · t39 git K1 · t40 git AVLU · t41 bekle · t42 git K1 · t43 git AVLU · t44 bekle · t45 git K1 · t46 git AVLU · t47 bekle · t48 git K1 · t49 git AVLU · t50 bekle · t51 git K1 · t52 git AVLU · t53 bekle · t54 git K1 · t55 git AVLU · t56 bekle · t57 git K1 · t58 git AVLU · t59 bekle · t60 git K1 · t61 git AVLU · t62 bekle · t63 git K1 · t64 git AVLU · t65 bekle · t66 git K1
+T3 tasiyici: t0 bekle x9
+TB teslim_basajan: t0 bekle x8 · t8 oner

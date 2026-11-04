@@ -1,0 +1,72 @@
+{
+ "model": "qwen2.5:7b-instruct-q4_K_M",
+ "tasiyici": "yerel",
+ "sicaklik": 0.7,
+ "tohumlar": [
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45
+ ],
+ "kart_ozet": "c143345714a933d379ce6fb834f83f24bf244ced96527b2a66d7bad395af47a6",
+ "model_kimlik": {
+  "etiket": "qwen2.5:7b-instruct-q4_K_M",
+  "ozet": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+  "boyut": 4683087332,
+  "ayrinti": {
+   "parent_model": "",
+   "format": "gguf",
+   "family": "qwen2",
+   "families": [
+    "qwen2"
+   ],
+   "parameter_size": "7.6B",
+   "quantization_level": "Q4_K_M",
+   "context_length": 32768,
+   "embedding_length": 3584,
+   "runner": "ggml"
+  }
+ },
+ "tavan": 10,
+ "sahneler": [
+  [
+   "k25_ODA3",
+   25,
+   "ODA3"
+  ],
+  [
+   "k12_ODA3",
+   12,
+   "ODA3"
+  ],
+  [
+   "k05_ODA3",
+   5,
+   "ODA3"
+  ],
+  [
+   "k12_ODA2",
+   12,
+   "ODA2"
+  ],
+  [
+   "k12_ODA1",
+   12,
+   "ODA1"
+  ]
+ ],
+ "kollar": [
+  "eski",
+  "dunya",
+  "dunya_ogretme"
+ ],
+ "kol_surumu": "O2b v5",
+ "baslangic": "2026-10-30T19:07:11+0300",
+ "bitis": "2026-10-30T19:41:12+0300"
+}

@@ -1,0 +1,26 @@
+LUNA SIZINTI OLCUMU · ablasyonsuz kodon acik 300 kosu · uretici luna_sizinti_olc.py
+
+D = 150
+U12 = 100
+U3 = 50
+bizim_tasiyici_ajan = 750
+hedef_bizim_tasiyici_ajan = 3
+hedef_uyuyan_kacan_U12 = 2
+hedef_uyuyan_kacan_U3 = 2
+hedef_uyuyan_yakalanan_U12 = 6
+hedef_uyuyan_yakalanan_U3 = 11
+kacan_U12 = 32
+kacan_U3 = 17
+karar_renk_olay = 3485
+konumda_renk_olay = 7393
+kosu = 300
+s1_olay = 3940
+yakalanan_U12 = 68
+yakalanan_U3 = 33
+zarf_metin_bizim = 39
+zarf_metin_dis_sinsi = 7
+zarf_metin_ic_uyuyan = 9
+zarf_metin_kanarya_dis_sinsi = 2
+zarf_metin_kanarya_ic_uyuyan = 2
+
+Gece 3 tek olayda en cok token (soru haric): {'betik': 0, 'bizim': 3412, 'dis_sinsi': 2493, 'ic_uyuyan': 3360}

@@ -1,0 +1,14 @@
+v4_kosu1_O1_O2b_t7       is False tur  40 takildi T1         durdu -                cagri   92 gecersiz   0   597.2 sn
+CAGRI 92 gt en cok 4078 p50 2834 4000 ustu 3 mesaj sayisi en cok 16
+EN UZUN mesaj: karakter 9241 n 14 4096'da sayilan 3738 16384'te gercek boy 4832
+EN UZUN mesaj: karakter 9241 n 14 4096'da sayilan 3738 16384'te gercek boy 4832
+EN UZUN mesaj: karakter 9241 n 14 4096'da sayilan 3738 16384'te gercek boy 4832
+TANI BITTI
+v4_kosu1_O1_O2b_t7       is True  tur  17 takildi -          durdu -                cagri   41 gecersiz   0    29.1 sn
+CAGRI 41 gt en cok 2777 p50 2412 4000 ustu 0 mesaj sayisi en cok 16
+EN UZUN mesaj: karakter 6624 n 14 4096'da sayilan 2777 16384'te gercek boy 2777
+EN UZUN mesaj: karakter 6608 n 14 4096'da sayilan 2773 16384'te gercek boy 2773
+EN UZUN mesaj: karakter 6495 n 14 4096'da sayilan 2769 16384'te gercek boy 2769
+TANI BITTI
+
+[exited with code 0]

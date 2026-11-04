@@ -1,0 +1,6 @@
+KOSU k0250
+B basajan: t0 oner T1 · t0 atandi T1 · t1 bekle x16
+T1 tasiyici: t0 git K1 · t1 levha_cevap · t2 goster · t2 zarf_al · t3 anahtar_al · t4 git K1.LAB.ODA2 · t5 git ODA3 (olmadı) · t6 git K1.LAB.ODA1 · t7 git K1.LAB.ODA3 · t8 zarf_yap (olmadı) · t9 git K1.LAB.ODA1 · t10 git K1.LAB.ODA2 · t11 git K1.LAB.CIKIS · t12 anahtar_kullan · t12 git K2 · t13 zarf_yaz (olmadı) · t14 goster · t15 levha_cevap · t16 goster · t16 zarf_birak
+T2 tasiyici: t0 bekle x14 · t14 git K1 · t15 git AVLU · t16 bekle
+T3 tasiyici: t0 bekle x13 · t13 git K1 · t14 git AVLU · t15 bekle · t16 git K1 · t17 levha_cevap · t18 goster · t19 git K1.LAB.ODA2 · t20 anahtar_al · t21 git K1.LAB.CIKIS · t22 anahtar_kullan · t22 git K2 · t23 zarf_yap · t24 levha_cevap · t25 goster
+TB teslim_basajan: t0 bekle x16 · t16 oner

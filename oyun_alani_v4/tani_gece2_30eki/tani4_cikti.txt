@@ -1,0 +1,16 @@
+(a) kisa   4096: (' Gizli sözcük ZEBRA41. Sorulursa yalnız bu sözc', 57)
+(a) tasan  4096: ('Gizli sözcük ZEBRA41.', 4069)
+(a) tasan 16384: ('Gizli sözcükler, kayıtlanmış ve kayıtlanmamış ol', 5487)
+(b) kosu | ilk 3'lu ayni red adimi | ilk >=3700 token adimi | once
+    O1_O2b_t6 None None ikisi de yok
+    O1_O2b_t7 63 53 tasma
+    O1_O2b_t8 23 None takilma
+    O1_O2b_t9 59 57 tasma
+    O1_O2b_t10 25 49 takilma
+    O1_O2b_t11 33 None takilma
+    O1_O2b_t12 33 None takilma
+    O1_O2b_t13 26 None takilma
+    O1_O2b_t14 24 48 takilma
+    O1_O2b_t15 42 52 takilma
+(c) G2 0 []
+(c) G3 0 []

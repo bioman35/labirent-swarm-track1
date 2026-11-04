@@ -1,0 +1,6 @@
+KOSU k0012
+B basajan: t0 oner T1 · t0 atandi T1 · t1 bekle x19
+T1 tasiyici: t0 git K1 · t1 levha_cevap · t2 goster · t2 zarf_al · t3 git K1.LAB.ODA2 · t4 git ODA3 (olmadı) · t5 git K1.LAB.ODA1 · t6 anahtar_al · t7 git K1.LAB.ODA3 · t8 git CIKIS (olmadı) · t9 levha_cevap (olmadı) · t10 anahtar_kullan (olmadı) · t11 git K1.LAB.ODA1 · t12 anahtar_al (olmadı) · t13 git K1.LAB.ODA2 · t14 git K1.LAB.CIKIS · t15 anahtar_kullan · t15 git K2 · t16 zarf_yaz (olmadı) · t17 goster · t18 levha_cevap · t19 goster · t19 zarf_birak
+T2 tasiyici: t0 bekle x9 · t9 git K1 · t10 bekle · t11 zarf_yaz (olmadı) · t12 bekle · t13 zarf_yaz (olmadı) · t14 bekle · t15 zarf_yaz (olmadı) · t16 bekle · t17 zarf_yaz (olmadı) · t18 bekle · t19 zarf_yaz (olmadı) · t20 bekle · t21 zarf_yaz (olmadı) · t22 bekle · t23 zarf_yaz (olmadı) · t24 bekle · t25 zarf_yaz (olmadı) · t26 bekle · t27 zarf_yaz (olmadı) · t28 bekle x3
+T3 tasiyici: t0 bekle x8 · t8 git K1 · t9 bekle · t10 zarf_yaz (olmadı) · t11 bekle · t12 zarf_yaz (olmadı) · t13 bekle · t14 zarf_yaz (olmadı) · t15 bekle · t16 zarf_yaz (olmadı) · t17 bekle · t18 zarf_yaz (olmadı) · t19 bekle · t20 zarf_yaz (olmadı) · t21 bekle · t22 zarf_yaz (olmadı) · t23 bekle · t24 zarf_yaz (olmadı) · t25 bekle · t26 zarf_yaz (olmadı) · t27 bekle x3
+TB teslim_basajan: t0 bekle x19 · t19 oner

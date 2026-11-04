@@ -1,0 +1,7 @@
+sistem testi 4096 : ('{"tamam":1}', 3937)
+sistem testi 16384: ('{"tamam":1}', 5550)
+G3 4000 ustu olay: [('soru', 71)] soru disi en cok 3189
+tani3_a_t7_sicak ['       is True  tur  17 takildi -          durdu -       ']
+tani3_b_t7_soguk ['       is True  tur  17 takildi -          durdu -       ']
+tani3_c_t6_7_soguk ["       is False tur  40 takildi T1,T2      durdu {'T3': '", '       is False tur  40 takildi T1,T2      durdu -       ']
+TANI3 BITTI

@@ -1,0 +1,29 @@
+
+## Q7 v4 t16-25 ogretme kosu 10 is 9
+  harita /kosu: {'olumsuz_cumle': 0.4, 'uzak_alan': 2.1, 'uydurma_eylem': 0.0, 'talimat_sanma': 0.0, 'geri_alinamaz': 0.0, 'uzun_pencere': 0.6}
+  olay basi token: en cok 2942 p95 2480 ort 1801 4096 ustu 0
+  en uzun ayni red serisi (kosu basi): [1, 1, 1, 1, 2, 1, 1, 1, 1, 1]
+  en sik red: [('labirent', 10), ('Buradan ODA3 yolu yok.', 6), ('Bu eylem burada çalışmaz: anahtar_kullan', 6), ('Buradan CIKIS yolu yok.', 4), ('Bu eylem burada çalışmaz: anahtar_al', 4), ('Bu eylem burada çalışmaz: zarf_yaz', 3), ('Bu eylem burada çalışmaz: levha_cevap', 2)]
+
+## Q7 v4 t16-25 taban kosu 0 is 0
+  harita /kosu: {'olumsuz_cumle': 0.0, 'uzak_alan': 0.0, 'uydurma_eylem': 0.0, 'talimat_sanma': 0.0, 'geri_alinamaz': 0.0, 'uzun_pencere': 0.0}
+  en uzun ayni red serisi (kosu basi): []
+  en sik red: []
+
+## Mistral v4 t6-15 ogretme kosu 10 is 0
+  harita /kosu: {'olumsuz_cumle': 9.1, 'uzak_alan': 34.6, 'uydurma_eylem': 5.0, 'talimat_sanma': 0.0, 'geri_alinamaz': 0.1, 'uzun_pencere': 1.6}
+  olay basi token: en cok 7351 p95 4103 ort 2904 4096 ustu 48
+  en uzun ayni red serisi (kosu basi): [27, 39, 39, 39, 3, 37, 0, 33, 40, 27]
+  en sik red: [('Buradan K1 yolu yok.', 276), ('Bu eylem burada çalışmaz: zarf_yaz', 54), ('Böyle bir eylem yok: gecersiz', 50), ('Bu eylem burada çalışmaz: anahtar_al', 46), ('Bu eylem burada çalışmaz: zarf_ac', 35), ('Bu eylem burada çalışmaz: levha_cevap', 16), ('Bu eylem burada çalışmaz: goster', 15)]
+
+## Mistral v4 t6-15 taban kosu 10 is 0
+  harita /kosu: {'olumsuz_cumle': 10.8, 'uzak_alan': 15.7, 'uydurma_eylem': 0.3, 'talimat_sanma': 0.0, 'geri_alinamaz': 0.0, 'uzun_pencere': 0.0}
+  olay basi token: en cok 2376 p95 2303 ort 1576 4096 ustu 0
+  en uzun ayni red serisi (kosu basi): [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  en sik red: [('Buradan None yolu yok.', 40), ('Bu eylem burada çalışmaz: levha_cevap', 40), ('Bu eylem burada çalışmaz: goster', 39), ('Bu eylem burada çalışmaz: anahtar_al', 39), ('Bu eylem burada çalışmaz: anahtar_kullan', 39), ('Bu eylem burada çalışmaz: zarf_ac', 36), ('Bu eylem burada çalışmaz: zarf_yaz', 36)]
+
+## Q3 v4 t6-15 ogretme kosu 10 is 0
+  harita /kosu: {'olumsuz_cumle': 24.6, 'uzak_alan': 7.8, 'uydurma_eylem': 0.0, 'talimat_sanma': 0.0, 'geri_alinamaz': 0.2, 'uzun_pencere': 1.2}
+  olay basi token: en cok 8594 p95 5457 ort 2613 4096 ustu 71
+  en uzun ayni red serisi (kosu basi): [26, 35, 5, 25, 33, 2, 14, 10, 35, 12]
+  en sik red: [('Bu eylem burada çalışmaz: zarf_yap', 170), ('Bu eylem burada çalışmaz: zarf_yaz', 55), ('Bu eylem burada çalışmaz: anahtar_al', 37), ('Bu eylem burada çalışmaz: oner', 19), ('Bu eylem burada çalışmaz: anahtar_kullan', 19), ('Bu eylem burada çalışmaz: levha_cevap', 16), ('Buradan ODA1 yolu yok.', 13)]
