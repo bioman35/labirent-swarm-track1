@@ -15,7 +15,7 @@ Everything in this repository that was committed **before 6 November 2026 21:30 
 
 **Work done during the sprint (6-8 November 2026):** the scored runs (Koşu 4, 5a, 5b, 5c; Luna judge EK5a and EK5b), their records and tables, the figures, the sprint film made on the replay stage, the report, and documentation edits such as this section. Each sprint-time file is listed in Appendix D of the report with its timestamp. The ledger hash chain shows that no lock text changed after the first scored run.
 
-**What is not here:** the hidden answer keys for the judge runs (`luna/gizli/`) stay out of the repository until the report is submitted; the API keys are never in the repository.
+**Judge answer keys:** the hidden answer keys for the judge runs (`oyun_alani_v4/luna/gizli/`) were withheld until the report was submitted and added after submission on 8 Nov 2026; they match their SHA256 entries in the 4 Nov freeze list. **What is not here:** the API keys are never in the repository.
 
 **How to re-run:** see `README_RUN.md` (rebuild every table from the records at no cost, local re-runs, paid re-runs).
 

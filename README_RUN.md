@@ -11,7 +11,7 @@ Run every script from the folder it lives in, with `python -I` (isolated mode, a
 ```
 # freeze check: 2,327 files hashed before the sprint window (4 Nov)
 sha256sum -c oyun_alani_v4/DONDURMA_4KAS.sha256
-#   expect 2,325 OK; the 2 files under oyun_alani_v4/luna/gizli/ (judge ground truth) are not in this repository, see below
+#   expect 2,327 OK (including the 2 judge ground-truth files under oyun_alani_v4/luna/gizli/, added after submission, see below)
 
 # lock ledger: prediction locks and deviations, hash-chained
 cd oyun_alani_v3
@@ -45,7 +45,7 @@ python -I danisman_puanlama/oku5b.py         # 5b measures (4.7); turuncu5b.py a
 python -I danisman_puanlama/puan_5c.py       # 5c r0+r1+r2 locked measures (4.12, B.4)
 python -I danisman_puanlama/yol_5c.py        # 5c intruder gate paths, seeds 39 and 44
 python -I danisman_puanlama/k1_gecis.py      # every K1 pass in the sprint records, with assignment status (B.6)
-python -I danisman_puanlama/puan_ek5a.py cevap_ek5a_2000   # judge table EK5a / EK5a-2 (4.7, B.5); needs the answer keys, see below
+python -I danisman_puanlama/puan_ek5a.py cevap_ek5a_2000   # judge table EK5a / EK5a-2 (4.7, B.5); uses the answer keys in luna/gizli/
 python -I danisman_puanlama/film_kontrol.py  # sha256 and event order of the five runs in the sprint film
 ```
 
@@ -95,7 +95,10 @@ python -I luna_yargic.py --asama ek5a --tavan 2000 --klasor cevap_ek5a_2000
 
 Our 5a ran in four folders (`v4_kosu5a_luna`, `_b`, `_c`, `_d`) after isolated transport errors; the merge rule (earliest completed copy counts) was fixed before the results were read, see `KOSU_GUNLUGU_7KAS.md` and Appendix D. Run 4's first folder `v4_kosu4_luna` is a failed start (local model server was down, 0 API calls), kept as evidence.
 
+## Judge answer keys
+
+`oyun_alani_v4/luna/gizli/` holds the judge ground truth (which agent is the sleeper in each judged record): `yer_gercegi.json` (EK5a) and `yer_gercegi_ek5b.json` (EK5b). They were withheld until the report was submitted and added after submission on 8 Nov 2026, in the commit "Judge answer keys (luna/gizli), added after submission". Both files are byte-identical to their entries in the 4 Nov freeze list, so the freeze check above now gives 2,327 OK and the EK5a/EK5b tables rebuild.
+
 ## Not in this repository
 
-- `oyun_alani_v4/luna/gizli/`: the judge ground truth (which agent is the sleeper in each judged record). Until the report is submitted the judge answer keys are withheld; they are added in a follow-up commit, after which the EK5a/EK5b tables rebuild.
 - API keys, and the key file path on our machine.
