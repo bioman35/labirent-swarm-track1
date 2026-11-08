@@ -78,7 +78,10 @@ function dugumYol(a, b) {
 const SLOT = { T1: 0, T2: 1, T3: 2, S1: 3, B: 0, TB: 0 };
 function nokta(k, id) {
   const [x, z] = YER[k] || YER[k.split('.')[0]] || [0, 0], s = SLOT[id] ?? 0;
-  if (/^K\d$/.test(k)) return new THREE.Vector2(x - 2.7, z + (s - 1) * 1.45);
+  // sprint 8 Kas (Turan: "ajanlar duvarin icine geciyor"): S1'in 4. sirasi K1'de zarf kutusuna, odada kaideye denk geliyordu; S1 kapida karsi yana, odada sola alinir
+  const s1 = SPRINT && id === 'S1';
+  if (/^K\d$/.test(k)) return new THREE.Vector2(x - 2.7, z + (s1 ? -2 : s - 1) * 1.45);
+  if (s1 && k.includes('.') && !/KIRMIZI|TURUNCU/.test(k)) return new THREE.Vector2(x - 1, z + .6);
   if (k === 'AVLU') return new THREE.Vector2(x - 3 + s * 3, z + (s % 2 ? 2.4 : -2.4));
   if (k.endsWith('YUVA')) return new THREE.Vector2(x, z - 1.2);
   if (k.endsWith('ARSIV')) return new THREE.Vector2(x - 3, z);
@@ -204,6 +207,9 @@ function kurgula(f, op = null) {
       if (e.olay === 'zarf_dustu' && k.zarf.at(-1).id === e.ajan_id) k.zarf.push({ w: e._w, d: 'dustu' });
       if (e.olay === 'zarf_yap') k.sahte[e.ajan_id] = { w: e._we - (e._we - e._w) * .5 };
       if (e.olay === 'zarf_dustu' && k.sahte[e.ajan_id]) k.sahte[e.ajan_id].dus = e._w;
+      // 8 Kas aksam: labirent anahtari ve cikis kapisi butun ajanlar icin (yalniz secili ajanin olaylari degil; yoksa arka plandaki T1 kapali kapidan gecer)
+      if (e.olay === 'anahtar_al' && e.ajan_id in turler) { (k.anahtar[e.ajan_id] ||= []).push({ w: e._w + (e._we - e._w) * .5, bit: 1e9 }); k.anahtarYer.push({ konum: e.konum, w: e._w + (e._we - e._w) * .5 }); }
+      if (e.olay === 'anahtar_kullan' && e.ajan_id in turler) { const l = k.anahtar[e.ajan_id]; if (l && l.length) l.at(-1).bit = e._we; k.cikis.push({ lab: e.konum.split('.').slice(0, 2).join('.'), w: e._w + (e._we - e._w) * .4 }); }
     }
     k.zarf.sort((a, b) => a.w - b.w);
     // ayni turda kutu 2 ile arsiv: kayit sirasi once kutu 2, sonra arsiv
@@ -308,8 +314,8 @@ function kurgula(f, op = null) {
       else if (o === 'zarf_al') k.zarf.push({ w: e._w + (e._we - e._w) * .35, d: 'ajan', id: a });
       if (!op && o === 'zarf_birak' && (e.metin || '').startsWith('kutu 2')) k.zarf.push({ w: e._w + (e._we - e._w) * .5, d: 'kutu2' });
       if (!op && o === 'zarf_yap') k.sahte[a] = { w: e._we - (e._we - e._w) * .5 };
-      if (o === 'anahtar_al') { (k.anahtar[a] ||= []).push({ w: e._w + (e._we - e._w) * .5, bit: 1e9 }); k.anahtarYer.push({ konum: e.konum, w: e._w + (e._we - e._w) * .5 }); }
-      if (o === 'anahtar_kullan') { const l = k.anahtar[a]; if (l && l.length) l.at(-1).bit = e._we; k.cikis.push({ lab: e.konum.split('.').slice(0, 2).join('.'), w: e._w + (e._we - e._w) * .4 }); }
+      if (!op && o === 'anahtar_al') { (k.anahtar[a] ||= []).push({ w: e._w + (e._we - e._w) * .5, bit: 1e9 }); k.anahtarYer.push({ konum: e.konum, w: e._w + (e._we - e._w) * .5 }); }
+      if (!op && o === 'anahtar_kullan') { const l = k.anahtar[a]; if (l && l.length) l.at(-1).bit = e._we; k.cikis.push({ lab: e.konum.split('.').slice(0, 2).join('.'), w: e._w + (e._we - e._w) * .4 }); }
       if (o === 'isaret' && (e.metin || '').startsWith('izlendi')) k.izlendi[a] = e._w;
       if (o === 'durdu') k.son[a] = { w: e._w, tip: e.renk === 'TURUNCU' ? 'insan' : 'kuyu' };
       if (o === 'takildi') k.son[a] = { w: e._w, tip: 'takildi' };
@@ -817,6 +823,23 @@ function guncelleOyuncu(w, zaman, dt, b) {
     o.et.style.display = gorunur ? '' : 'none';
     if (gorunur) { o.et.style.left = (v1.x + 1) / 2 * innerWidth + 'px'; o.et.style.top = (1 - v1.y) / 2 * innerHeight + 'px'; }
   }
+  // sprint 8 Kas aksam: yollari kesisen iki ajan birbirinin icinden gecmesin; yalniz goruntude yana ayrilirlar (kayit konumu ve sira degismez)
+  if (SPRINT) {
+    const gor = Object.values(oyuncu).filter(o => o.g.visible), MIN = .8;
+    for (let i = 0; i < gor.length; i++) for (let j = i + 1; j < gor.length; j++) {
+      const p = gor[i].g.position, q = gor[j].g.position;
+      if (Math.abs(p.y - q.y) > 1) continue;
+      let dx = q.x - p.x, dz = q.z - p.z, d = Math.hypot(dx, dz);
+      if (d >= MIN) continue;
+      if (d < 1e-3) { dx = 0; dz = 1; d = 1; }
+      const it = (MIN - d) / 2 / d;
+      p.x -= dx * it; p.z -= dz * it; q.x += dx * it; q.z += dz * it;
+      for (const o of [gor[i], gor[j]]) {
+        v1.copy(o.g.position).setY(o.g.position.y + 2.95).project(kamera);
+        if (v1.z < 1) { o.et.style.left = (v1.x + 1) / 2 * innerWidth + 'px'; o.et.style.top = (1 - v1.y) / 2 * innerHeight + 'px'; }
+      }
+    }
+  }
 }
 function gogus(o, hedef) {
   const f = 1.14; hedef.set(o.g.position.x + Math.sin(o.yon) * .58 * f, o.g.position.y + 1.42 * f, o.g.position.z + Math.cos(o.yon) * .58 * f); return hedef;
@@ -861,7 +884,7 @@ function guncelleKapi(w, zaman, dt) {
   for (const ad in labKapi) {
     const L2 = labKapi[ad], acik = k.cikis.some(c => c.lab === ad && w >= c.w && w < c.w + .8);
     const h = acik ? 3.1 : 0;
-    L2.kp.position.y = L2.y + (dt === 0 ? h : (L2.kp.position.y - L2.y) + (h - (L2.kp.position.y - L2.y)) * Math.min(1, dt * 4));
+    L2.kp.position.y = L2.y + (dt === 0 ? h : (L2.kp.position.y - L2.y) + (h - (L2.kp.position.y - L2.y)) * Math.min(1, dt * (SPRINT ? 14 : 4)));   // sprint: hizli geciste kapi ajandan once kalksin
     L2.ku.material.emissiveIntensity = acik ? 2.4 : 1.2;
   }
   const z = zarfDurum(w);
@@ -884,6 +907,8 @@ function kamHedef(c, b, zaman) {
     case 'labTakip': {
       if (!A) return R(0, 20, 30, 0, 0, 0);
       const s = A.z < 0 ? -1 : 1;
+      // sprint 8 Kas aksam: kapi yakininda kamera kule catisina giriyordu; daha yuksek ve daha yandan
+      if (SPRINT && [YER.K0[0], YER.K1[0], YER.K2[0]].some(x => Math.abs(A.x - x) < 6.5)) return R(A.x + 6, 18, A.z + s * 8, A.x, .8, A.z, 36);
       return R(A.x - 2.2, 15.5, A.z + s * 5.4, A.x + .6, .8, A.z, 38);
     }
     case 'yakin': {
@@ -898,6 +923,8 @@ function kamHedef(c, b, zaman) {
     }
     case 'takip': {
       if (!A) return R(-3, 12, 22, -3, 1, 0);
+      // sprint 8 Kas aksam: labirentte ve cikis koridorunda alcak takip kamerasi duvarin arkasinda kaliyordu; yukaridan bak
+      if (SPRINT && Object.values(LAB).some(x0 => A.x > x0 - 1.5 && A.x < x0 + SUT * HUCRE + 2.6)) { const s = A.x > 38 || A.z >= -.5 ? 1 : -1; return R(A.x - 5, 14, A.z + s * 7, A.x + 1, 1, A.z, 40); }   // K2 onunde denetci ve kutu eksi z'de: kamera arti yandan
       const r = 9, a = Y + Math.PI + .42;
       return R(A.x + Math.sin(a) * r, A.y + 4.8, A.z + Math.cos(a) * r, A.x + Math.sin(Y) * 2, A.y + 1.5, A.z + Math.cos(Y) * 2, 42);
     }
@@ -1104,7 +1131,7 @@ const SV = window.SPRINT;
 let S_PARCA = [], S_SURE = 0, S_HAZIR = false, ST = 0, S_AKTIF = -1;
 const S_ON = .9;          // bolum kapagindan anlatima kadar
 const S_PAY = 1.6;        // anlatim bittikten sonra kayit akmaya devam eder
-const kartSure = satirlar => Math.max(6, 2 + satirlar.join(' ').split(/\s+/).length * .24);   // danisman 8 Kas: 0,28 -> 0,24
+const kartSure = satirlar => Math.max(4.5, 1.5 + satirlar.join(' ').split(/\s+/).length * .16);   // danisman 8 Kas: 0,28 -> 0,24; Turan 8 Kas aksam "yazilarda bekleme cok uzun": 0,16
 const cumleler = s => s.split(/(?<=[.?!])\s+(?=[A-Z0-9"(])/);
 
 function olcekle(k_, hedef, hizliW = -1) {
@@ -1165,7 +1192,7 @@ function sprintKur() {
   // 6 yargic: kosusuz; son kosunun dunyasi yukaridan, kartlar
   {
     const bl = B[5], D = A[6].sure, kale = { tip: 'kale' }, k4 = kurgula(FILMLER[4], { parca: ['yol'] }), wSon = k4.beats.at(-1).w1;
-    const k1 = kartSure(bl.kart.slice(0, 1)), k2 = kartSure(bl.kart.slice(1)) + 1.5;
+    const k1 = kartSure(bl.kart.slice(0, 1)), k2 = kartSure(bl.kart.slice(1)) + .8;
     const k_ = kurgula(FILMLER[4], { ozel: [{ d: S_ON + D + S_PAY, w0: wSon, w1: wSon, kam: kale, prio: 3, bolum: { u: T(`Part ${bl.no}`, `Part ${bl.no}`), a: T(bl.ad, bl.ad) } }, { d: k1 + k2, w0: wSon, w1: wSon, kam: kale, prio: 0 }] });
     const t1 = S_ON + D + S_PAY;
     P.push({ ad: 'yargic', fi: 4, k: k_, kosu: false, gizle: true, ekran: [{ t0: t1, t1: t1 + k1, tip: 'kart', satir: cumleler(bl.kart[0]) }, { t0: t1 + k1, t1: t1 + k1 + k2, tip: 'kart', satir: cumleler(bl.kart[1]), dip: bl.kartDip }],
@@ -1175,14 +1202,15 @@ function sprintKur() {
   {
     const f0 = FILMLER[0], D = A[7].sure, mavi = f0.kayit.find(e => e.olay === 'kapi_karar' && e.karar === 'MAVI');
     const w0 = Math.max(0, mavi.zaman - .55), w1 = mavi.zaman + .95, kapiK = { tip: 'kapiYakin', g: 'K1' }, kale = { tip: 'kale' };
-    const kk = kartSure(SV.kapanis) + 1.5;
-    const dS = Math.max(6, kartSure([SV.dip]));
-    const k_ = kurgula(f0, { ozel: [{ d: 6, w0, w1, kam: kapiK, prio: 3 }, { d: kk + .4 + D + S_PAY + dS, w0: w1, w1: w1, kam: kale, prio: 3 }] });
+    const kk = kartSure(SV.kapanis) + .8;
+    // Turan 8 Kas aksam: anlatim bittikten sonra 10 sn'den uzun bekleme olmasin; dip yazisi 8 sn, araya .6 sn
+    const dS = 8, pay = .6;
+    const k_ = kurgula(f0, { ozel: [{ d: 6, w0, w1, kam: kapiK, prio: 3 }, { d: kk + .4 + D + pay + dS, w0: w1, w1: w1, kam: kale, prio: 3 }] });
     // kapinin isigi: kayittaki MAVI karari, dunya saatinden film saatine
     const tM = (mavi.zaman - w0) / (w1 - w0) * 6;
     (k_.kapi.K1 ||= []).push({ t: tM, r: 'MAVI', d: 3 });
     const ab = 6 + kk + .4;
-    P.push({ ad: 'kapanis', fi: 0, k: k_, kosu: false, ekran: [{ t0: 6, t1: 6 + kk, tip: 'kart', satir: SV.kapanis, sirali: 1 }, { t0: ab + D + S_PAY, t1: ab + D + S_PAY + dS, tip: 'dip' }],
+    P.push({ ad: 'kapanis', fi: 0, k: k_, kosu: false, ekran: [{ t0: 6, t1: 6 + kk, tip: 'kart', satir: SV.kapanis, sirali: 1 }, { t0: ab + D + pay, t1: ab + D + pay + dS, tip: 'dip' }],
       anlatim: { n: 7, bas: ab }, satir: anlatimSatirlari(7, ab) });
   }
   let acc = 0;
@@ -1214,7 +1242,7 @@ function ekranYaz(p, tl) {
   const kp = $('kartP');
   if (kart) {
     if (kp.dataset.id !== String(kart.t0) + p.ad) { kp.dataset.id = String(kart.t0) + p.ad; kp.innerHTML = kart.satir.map(s => `<p>${s}</p>`).join('') + (kart.dip ? `<small>${kart.dip}</small>` : ''); }
-    const ps = kp.querySelectorAll('p'), adim = kart.sirali ? 2.2 : .55;
+    const ps = kp.querySelectorAll('p'), adim = kart.sirali ? 1.4 : .45;
     ps.forEach((x, j) => x.classList.toggle('acik', tl - kart.t0 >= .25 + j * adim));
     const s = kp.querySelector('small'); if (s) s.classList.toggle('acik', tl - kart.t0 >= .25 + ps.length * adim);
     kp.classList.add('acik');
@@ -1257,6 +1285,37 @@ function sprintBaslat() {
   window.HAZIR = true;
 }
 
+// sinama kancasi (8 Kas, Turan "ajanlar duvarin icine geciyor"): o anki karede gorunen ajanin govdesi kati bir nesnenin icinde mi
+window.__carp = (R = .38) => {
+  const ajanG = new Set(Object.values(oyuncu).map(o => o.g)), kati = [], m4 = new THREE.Matrix4();
+  sahne.updateMatrixWorld(true);
+  sahne.traverse(o => {
+    if (!o.isMesh) return;
+    let u = o; while (u.parent && u.parent !== sahne) u = u.parent;
+    if (ajanG.has(u) || u === anaZarf || u === sahteZarf) return;
+    const tip = o.geometry.type;
+    if (tip === 'TorusGeometry' || tip === 'CircleGeometry' || tip === 'PlaneGeometry') return;
+    o.geometry.boundingBox || o.geometry.computeBoundingBox();
+    const ekle = (b, ad) => { if (b.max.y - b.min.y > .35 && b.min.y < 1.6 && b.max.y > .4) kati.push([ad, b]); };
+    if (o.isInstancedMesh) for (let i = 0; i < o.count; i++) { o.getMatrixAt(i, m4); ekle(o.geometry.boundingBox.clone().applyMatrix4(m4).applyMatrix4(o.matrixWorld), 'duvar'); }
+    else ekle(new THREE.Box3().setFromObject(o), tip.replace('Geometry', '') + ' ' + o.getWorldPosition(new THREE.Vector3()).x.toFixed(1) + ',' + o.getWorldPosition(new THREE.Vector3()).z.toFixed(1));
+  });
+  const r = [];
+  for (const id in oyuncu) {
+    const g = oyuncu[id].g; if (!g.visible) continue;
+    const p = g.position;
+    for (const [ad, b] of kati) {
+      const dx = Math.max(b.min.x - p.x, 0, p.x - b.max.x), dz = Math.max(b.min.z - p.z, 0, p.z - b.max.z);
+      if (dx * dx + dz * dz < R * R && p.y < b.max.y - .2) { r.push(`${id} ${ad} @${p.x.toFixed(1)},${p.z.toFixed(1)} alt${b.min.y.toFixed(2)} w${wNow.toFixed(2)}`); break; }
+    }
+  }
+  const gor = Object.keys(oyuncu).filter(id => oyuncu[id].g.visible);
+  for (let i = 0; i < gor.length; i++) for (let j = i + 1; j < gor.length; j++) {
+    const p = oyuncu[gor[i]].g.position, q = oyuncu[gor[j]].g.position, d = Math.hypot(p.x - q.x, p.z - q.z);
+    if (d < .7 && Math.abs(p.y - q.y) < 1) r.push(`${gor[i]}-${gor[j]} ajan d${d.toFixed(2)} @${p.x.toFixed(1)},${p.z.toFixed(1)}`);
+  }
+  return r;
+};
 window.__film = { ac: filmAc, git: x => { t = x; bIdx = -1; oynat(false); ciz(0, true); ciz(.016); return k.bitis; }, kurgu: () => k, sonuc: () => { t = k.bitis; kapanisAc(); }, renderer, yolDenetle, wNow: () => wNow };
 const istenen = Q.get('film');
 if (SPRINT) sprintBaslat();

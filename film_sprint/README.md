@@ -12,4 +12,6 @@ Dosyalar
 - film.js, index.html: sahne ve kurgu (?sprint=1). IZLE.bat tarayıcıda oynatır (sessiz).
 - cik.py: kare kare çekim (Playwright, GPU). karis.py: anlatım sesini bölme ve birleştirme.
 
+8 Kas akşam düzeltmesi (5:46, önceki 6:28): ajanın kutu, kaide ve kapalı kapı içinden geçmesi, kesişen ajanlar, kart süreleri, kapanış bekleyişi, labirent kamerası. Ayrıntı FILM_METNI_8KAS.md "8 Kas akşam düzeltmeleri". Sinama: tarayıcıda `window.__carp()` o karede gövdesi bir nesnenin ya da başka ajanın içinde olan ajanları listeler.
+
 Yapım sırası: ses/anlatim_tam.* (ya da ses/anlatim_0..7.wav) → `python -I karis.py bol` → `python -I metin.py` → `python -I cik.py tam` → `python -I karis.py birlestir` → SPRINT_FILMI.mp4

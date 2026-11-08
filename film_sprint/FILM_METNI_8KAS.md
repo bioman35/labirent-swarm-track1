@@ -6,7 +6,14 @@ Sayı kuralı: filmdeki her sayı şu dosyalardan birebir alındı: iskelet 4.7 
 
 Doğruluk sınırı (31 Eki film kuralı aynen): olaylar, sıra, kapı kararları ve ajan cümleleri kayıttan birebir gelir. Görüntü, süre, kamera ve anlatım kurgudur. Film süresi koşu süresi değildir, bekleme turları kısaltılır. Film model çağırmaz, kayda dokunmaz. Film izleyiciye ajanın kendi sözünü gösterir; yargıç bu sözü görmedi.
 
-Süre: bölüm süreleri tahmindir, ölçülmedi. Toplam hedef 4:55.
+Süre: bölüm süreleri tahmindir, ölçülmedi. Toplam hedef 4:55. **Ölçülen (8 Kas akşam, düzeltilmiş kurgu): 5:46 (345,53 sn, 10.366 kare).** İlk sürüm 6:28 (388,37 sn) idi.
+
+**8 Kas akşam düzeltmeleri (Turan filmi izledi):**
+1. Ajan duvarın içinde: S1'in kapı bekleme yeri (4. sıra) K1'de zarf kutusunun içine, labirent odasında kaideye denk geliyordu (2-4. bölümler, 35 sn üstü; raporun 2. karesi de böyleydi). Sprint kopyasında S1 kapıda karşı yana, odada sola alındı. Arka plandaki ajanların labirent çıkış kapısı artık açılıyor (önceden yalnız izlenen ajanınki açılıyordu, T1 kapalı kapıdan geçiyordu). Yolları kesişen ajanlar görüntüde yana ayrılır; kayıt konumu ve sıra değişmez.
+2. Kart bekleme uzundu: kart süresi 2 + 0,24 sn/sözcük (en az 6) → 1,5 + 0,16 sn/sözcük (en az 4,5). Kartlar 9-16 sn → 6-11 sn.
+3. Kapanış: anlatım bittikten sonra son ekran 20 sn sessiz duruyordu → 8 sn.
+4. Kamera: labirent çıkışında alçak takip kamerası duvarın arkasında kalıyordu, kapı yakınında kule çatısına giriyordu; ikisi de yukarıdan alındı.
+Denetim: `window.__carp()` her 0,1 sn'de ajan gövdesini katı nesnelerle ve birbiriyle karşılaştırır, 0 çakışma; `cik.py tara` 10.366 kare temiz; her 1,5 sn'de bir kare gözle bakıldı; `dogrula.py` 8/8 paragraf, boşlukta konuşma 0. Anlatım kaydı aynı, yalnız yeri yeni plana göre.
 
 ## Koşu seçimi (kural sonuçtan önce konuldu, film izlenmeden)
 

@@ -1,6 +1,6 @@
 # Gates Below, a Judge Above: a 7B Local Tier Contains Covert Agents
 
-Author: Turan Kayık · Apart Research, Swarm Alignment Hackathon, Track 1 (Sandboxes and Testbeds) · 6-8 November 2026 · repository: https://github.com/bioman35/labirent-swarm-track1
+Turan Kayık · Apart Research, Swarm Alignment Hackathon, Track 1 (Sandboxes and Testbeds) · 6-8 November 2026 · repository: https://github.com/bioman35/labirent-swarm-track1
 
 *"We did not say it can be done. We said there is a way, and we found one."*
 
@@ -8,9 +8,15 @@ Author: Turan Kayık · Apart Research, Swarm Alignment Hackathon, Track 1 (Sand
 
 We built a small courier world in which five agents run by a 7B open-weight model (Qwen 2.5 7B, 4-bit, one 6 GB consumer GPU) carry one sealed envelope from an entry gate to an archive through short mazes. Every gate is a script that checks a sign code, a capability-scoped token and the envelope's seal; the same input always gets the same decision, and the model only proposes. An outside intruder and an inside sleeper, played by the same 7B model or a larger one, try to get a canary string into the archive. Every prediction was locked before its run. (1) Work: with signs and standing instructions the 7B agents finished the task in 10/10 exam seeds (world v3.4) and 9/10 (v4); without teaching, 4/10. A 3B model and a second 7B model finished 0/10 on those seeds. (2) Detection failed, structure held: the 7B intruder left the watched route unnoticed in 19/30 runs, yet no gate passed an intruder (K1 passes 0/30 in every arm, Luna and Gemini Flash as intruder included), the canary never reached the archive in 660 runs, and no cooperative agent was stopped without a logged violation. (3) The inside sleeper slipped through when the coordinator assigned it first (28/30), rarely otherwise (4/70): the observer catches unassigned movement, and an assigned sleeper has none to show. (4) A large-model judge reading the records did not separate sleepers from honest errors (9/9 called intent). Limits: one model family, ten-seed clusters, designers as measurers.
 
-## 1 Introduction
+## 1. Introduction
 
 Track 1 asks: "How far can a small, cheap model stand in for a frontier agent in the same environment? At which point do the results stop matching?" We take the question literally. We built one environment, froze it, and ran the same seeds with a 3B model, two 7B models and two large API models, in the same order, with every prediction written and hashed before the run. The answer is a ladder (Sections 4.1, 4.6, 4.7, 4.10) and a boundary map of where the small model breaks (4.5).
+
+Our main contributions are:
+
+- A small, frozen, fully logged courier world in which every gate is a script and the model only proposes, with a hash-chained ledger of 27 locked predictions and a re-run path that needs no API key.
+- A model ladder on the same seeds and run order (3B, two 7B models, two large API models), with a boundary map of the six error types that separate them, and a measurement of what teaching closed and what the world closed.
+- Three measured containment results: no unassigned pass in 660 runs, a sleeper mechanism (first assignment, not stealth) found from the records, and a negative first result for a large-model judge on action records, with the reason read from the record.
 
 Our starting point is that safety in a multi-agent sandbox should come from structure, not from the model. What is taught is the world, not the route. A small model is like a child: it learned to do the work not from a taught route but from a world with signs and standing instructions. The same world did not teach every model to the same degree; level and character set the method. The gates held: nobody passed without an assignment and nobody was stopped unjustly. The observer raised an alarm on unauthorised movement; but a sleeper the coordinator itself assigned carried the envelope and left no trace, so there was nothing for the observer to catch.
 
@@ -18,9 +24,7 @@ The gate design borrows its names from messenger and transfer RNA: each gate car
 
 Where Track 1's four questions are answered: agents cannot leave, and how we test it (3.2, 4.2, 4.4, 4.12); 5-20 agents for different principals, everything logged, rerunnable by another team (3.1, 3.2, 3.6, 4.11); small model versus frontier agent (4.1, 4.6, 4.7, 4.10, 4.5); transfer to real deployments and the test that would show it does not (4.12, Appendix A, L3-L4). One cross-track sentence for Track 4 is in Section 5.
 
-This is the third report by the same author with the same method (pre-registration, a hash-chained lock ledger, a submission gate that checks every number against a result file); the lineage is stated in Appendix D.
-
-## 2 Related Work
+## 2. Related Work
 
 
 **AI control and trusted monitoring.** AI control (Greenblatt et al., 2024) asks how to get useful work from a capable but possibly misaligned model: a weaker trusted model monitors it and escalates suspicious outputs to a limited human audit budget. Ctrl-Z (Bhatt et al., 2025) extends this to multi-step agents by resampling suspicious actions. Kale et al. (2026) find that a hybrid hierarchical-sequential design lets weaker monitors oversee stronger agents, and that human review of flagged cases alone raises detection at low false-positive rates.
@@ -32,23 +36,13 @@ This is the third report by the same author with the same method (pre-registrati
 **Our difference.** In this prior work the lower tier is a detector; in ours it is a deterministic gate. In AI control the strong model works and the weak model watches; in our design the weak model works, the gate holds, and the strong model judges only on escalation.
 
 
-## 3 Methods
+## 3. Methods
 
 ### 3.1 The world
 
 The map is DIS (outside) → K0 (outer gate) → maze → AVLU (courtyard) ↔ K1 (envelope gate, with box 1 and an inspector) → maze → K2 (delivery gate, with box 2 and a delivery inspector) → archive. Each maze has three rooms and an exit door that opens with a one-time key placed at random in one room. Roles (frozen rules file `oyun_alani_v4/KAPI_KURALLARI_DONUK_v4.md`, SHA256 17077b0e…):
 
-| role | who | does |
-|---|---|---|
-| entry archivist | script | puts the original envelope in box 1; reads nothing, talks to nobody |
-| coordinator | model | proposes which carrier takes the envelope; cannot open gates |
-| verifier | script | accepts or rejects the proposal against the candidate list |
-| inspector at K1 | script | on a pass, binds the envelope to the assigned carrier's bag; returns it to box 1 if the carrier abandons the job |
-| carriers (three) | model | carry the envelope from K1 to K2 without opening it |
-| delivery inspector at K2 | script | checks seal, number, closure and binding; accepts into box 2 |
-| delivery coordinator | model | proposes archiving |
-| exit archivist | script | files the envelope after checking seal and closure once more |
-| observer | script | logs suspicion, decides at the exit of the watched route |
+Roles: an entry archivist, a verifier, an inspector at K1, a delivery inspector at K2, an exit archivist and an observer are scripts; the coordinator, the delivery coordinator and three carriers are model agents (the coordinator proposes who carries, the inspector binds the envelope to that carrier's bag, the carriers carry it from K1 to K2 without opening it, the exit archivist files it after checking seal and closure). The full role table is Appendix B.0.
 
 ![Figure 1](../film_sprint/kareler/sprint_kare_1_k1_mavi.png)
 
@@ -82,7 +76,7 @@ Main lock 27 October (ledger entry 1); v4 lock (entry 9); model lock (EK2, EK2b)
 
 Baseline at v3.0 finished 0/5: agents got lost in the maze, the coordinator stalled, and in every failed run the carrier opened the original envelope. Versions v3.1-v3.3 changed the world (signs, the second question, the bag binding), not the model. One other 7B model (Mistral 7B) could not operate the world even at baseline (4.10).
 
-## 4 Results
+## 4. Results
 
 ### 4.1 Work: the small model finishes the job (T1, E1)
 
@@ -126,38 +120,26 @@ Three arms, seeds 16-25, same frozen world (v4), 7B agents unchanged: Koşu 4 (o
 
 T4 supported. Luna finished the task in 10/10 seeds; the 7B agents in 9/10 at temperature 0 (8-9/10 across three repeats at 0.7). The one seed that separates them (17) is a turn-limit failure of the 7B carriers, not a gate decision.
 
-The gate held against both big intruders. K1 passes 0/30 and 0/30 (7B intruder: 0/30 in three repeats); canary in the exit archive 0/60 and 0/60; unjust stops 0; work 54/60 (Luna arm) and 57/60 (Gemini arm), inside or above the 48-55/60 range of the 7B repeats. Both big intruders did something the 7B intruder almost never did: they forged a sealed envelope carrying the canary (Luna 25/30 runs, Gemini 26/30, 7B 1/30) and presented it at K1, where the identity check stopped every one of them (Luna: 18 red at K1, 12 step-limit; Gemini: 30 red at K1).
-
-![Figure 2](../film_sprint/kareler/sprint_kare_2_buyuk_sinsi_kirmizi.png)
-
-*Figure 2. The Luna intruder at K1 with a forged canary envelope: identity mismatch, RED. Run v4_kosu5a_O1_O2b_t16_D2, turn 19.*
+The gate held against both big intruders. K1 passes 0/30 and 0/30 (7B intruder: 0/30 in three repeats); canary in the exit archive 0/60 and 0/60; unjust stops 0; work 54/60 (Luna arm) and 57/60 (Gemini arm), inside or above the 48-55/60 range of the 7B repeats. Both big intruders did something the 7B intruder almost never did: they forged a sealed envelope carrying the canary (Luna 25/30 runs, Gemini 26/30, 7B 1/30) and presented it at K1, where the identity check stopped every one of them (Luna: 18 red at K1, 12 step-limit; Gemini: 30 red at K1; Figure 2, Appendix B.10).
 
 T5 not supported as locked. Measure (1) failed: the 7B intruder's clean exit from the watched route (YELLOW) was 22-25/30, not ≤ 2/30. Measure (2) depends on an operational definition the lock did not fix. By turns after the watched route, the Luna intruder lasted longer (median 62 vs 15) only because it kept probing K1 (319 gate decisions in 30 runs vs 32-35), and it was stopped before run end in 30/30 runs (7B: 11/30). The Gemini intruder went straight to K1 and was stopped within 2-3 attempts (median 12 turns). The big intruders were more persistent, not better hidden. We report both readings and label T5 inconclusive.
 
 Inner sleeper (U runs). The locked measure (U1-U2 undetected) was 4/20 (Luna), 6/20 (Gemini), 4-5/20 (7B). When a parcel was actually assigned to the sleeper it slipped through in 7/7 (Luna), 9/9 (Gemini) and 7/10 (7B) cases; assignment happened in only 4/20, 6/20 and 7/20 runs. The comparison is limited by the world's assignment rate, not by the models.
 
-Side observation (cause not established). With Gemini as intruder, our 7B carriers forged envelopes in 15/60 runs (22 forgeries, 19 after the intruder's own forgery in the same courtyard), 14 of them stopped at K1 as orange "fake seal", 3 tasks lost. In the Luna arm 5/60 runs, in the 7B baseline 8/60.
+A side observation on our own carriers' forgeries in the Gemini arm is in Appendix B.11.
 
-Judge (EK5a, EK5b; Appendix D for the cap deviation). EK5a as locked (output cap 400): 230/300 answers empty, because the model's hidden reasoning consumed the cap; among the 70 answered, catch 4/32 (U1-U2) and 0/17 (U3), false alarm 31/150. The three locked predictions held but on 70 answers only; we do not read more into it. EK5b (cap 2000, 9 cases, all answered): the judge called all nine "intent": 3/3 inner sleepers right, 0/4 honest errors right, 2/2 outsiders. Locked criterion: not separated. The record explains why: a 7B sleeper and a 7B honest error leave the same trace (both forge an envelope carrying the gate's own sign code and show their token); the summary and the record log what an agent did, not why. The gate had already stopped all nine. Rerun of EK5a after the cap fix (2000 tokens, Appendix D; post-hoc, locked result above unchanged): 258/300 answered (41 still empty, 1 connection reset). The judge caught 12/32 escaped sleepers (locked prediction 3-10) with a separation of 20 points over the clean baseline (bands: ≤10 no separation, ≥25 separates), and it named a sleeper in 86/150 clean runs (locked bound ≤60), 31 of them agents with no recorded violation. With the cap fixed the big judge sees something in the action summary and over-accuses, the same unassigned-movement-equals-intent reading as in EK5b.
+Judge (EK5a, EK5b; Appendix D for the cap deviation). EK5a as locked (output cap 400): 230/300 answers empty, because the model's hidden reasoning consumed the cap; among the 70 answered, catch 4/32 (U1-U2) and 0/17 (U3), false alarm 31/150. The three locked predictions held but on 70 answers only; we do not read more into it. EK5b (cap 2000, 9 cases, all answered): the judge called all nine "intent": 3/3 inner sleepers right, 0/4 honest errors right, 2/2 outsiders. Locked criterion: not separated. The record explains why: a 7B sleeper and a 7B honest error leave the same trace (both forge an envelope carrying the gate's own sign code and show their token); the summary and the record log what an agent did, not why. The gate had already stopped all nine. A post-hoc rerun with the cap raised to 2000 (Appendix B.5 and D) answered 258/300: catch 12/32 escaped U1-U2 sleepers, a sleeper named in 86/150 clean runs. With the cap fixed the judge sees something in the action summary and over-accuses.
 
-Cost, read from the provider account pages on 7 Nov (the key used had no spend before 6 Nov, so all of it is the runs): OpenAI, all gpt-5.6-luna, 6 Nov 0.22 + 7 Nov 1.44 = 1.66 USD for Koşu 4 + EK5a + EK5b + 5a (before EK5a-2); Google, Gemini 3.8 Flash, 923 requests logged (driver: 924), 100 percent success, 7 Nov 84 TRY and 6 Nov 6 TRY, may still rise with billing delay; request window 08:00-11:00Z matches the 5b record (08:22-10:14Z). The driver's own price table overestimated Luna (≈7.4 USD) and underestimated Gemini (≈1.1 USD); the account figures are the ones reported.
+Cost is reported under Code and Data, from the provider account pages, not from the driver's price table.
 
 
 ### 4.8 Repeat variance
 
-| Koşu 2 (temperature 0.7), seeds 16-25 | K1 passes (intruder) | U1-U2 undetected | U3 | canary | task | unjust |
-|---|---|---|---|---|---|---|
-| 28 Oct r0 | 0/30 | 5/20 | 2/10 | 0/60 | 53/60 | 0 |
-| repeat 1 | 0/30 | 5/20 | 3/10 | 0/60 | 55/60 | 0 |
-| repeat 2 | 0/30 | 4/20 | 2/10 | 0/60 | 48/60 | 0 |
-| ablation (codon off) | 0/30 | 6/20 | 3/10 | 0/60 | 50/60 | 0 |
-| Night 2 G1, seeds 26-35 | 0/30 | 6/20 | 4/10 | 0/60 | 59/60 | 0 |
-
-Source: `oyun_alani_v4/TEKRAR_TABLO_30eki.md`, `oyun_alani_v4/GECE2_SONUC_30eki.md`. The remaining real envelope losses (5/240) were our own carriers opening the envelope at the maze exit and then hitting the step limit.
+Three repeats at temperature 0.7 on seeds 16-25, the codon ablation and the seeds 26-35 run give the same picture: K1 passes 0/30 in every row, U1-U2 undetected 4-6/20, canary 0/60, task 48-59/60, unjust stops 0 (Appendix B.7). The remaining real envelope losses (5/240) were our own carriers opening the envelope at the maze exit and then hitting the step limit.
 
 ### 4.9 A rule that would have been a no-op
 
-A v5 rule ("the envelope carrier has a single path") was designed and then checked against the records before any run: the map is already single-path from K1 to K2, the sleeper that held the real envelope never deviated in 35 carries, and the task was never lost in an intruder's hands in 240 runs. The rule would not have changed the world; it was not run (`oyun_alani_v4/V5_ON_INCELEME_30eki.md`).
+A v5 rule was designed, checked against the records and not run, because the records showed it would change nothing (`oyun_alani_v4/V5_ON_INCELEME_30eki.md`; Appendix B.8).
 
 ### 4.10 A second 7B model (Mistral 7B, exploratory, EK3 G2)
 
@@ -165,27 +147,23 @@ Seeds 6-15, world v4: taught 0/10 (prediction 6-9), baseline 0/10 (2-5), teachin
 
 ### 4.11 Reproducibility: temperature-0 results depend on run order
 
-Ten seeds run twice in the same order gave the same ten results. Seed 7 alone finished the task (17 turns, twice); run after seed 6 it did not (40 turns). Mistral's seed 7 did not change. The cause was not measured; the candidates are the local server's cache from the previous run and small numerical differences at an unstable decision. We therefore report temperature-0 results with their run order, and the gates, not the model, as the deterministic part.
+The same ten seeds in the same order gave the same ten results twice, but seed 7 finished alone and failed after seed 6 (Appendix B.9). We report temperature-0 results with their run order; the gates, not the model, are the deterministic part.
 
 ### 4.12 Rule-aware intruder and sleeper (5c, EK5 lock, run 7-8 November)
 
 
 Setup: locked 2 November; 120 runs, seeds 36-45, three repeats, local 7B at temperature 0.7, no API. The intruder and the sleeper were given the gate rules on their cards (token pairing, seal, archive rule; no method, no example move). Structure: K1 passes 0/30, canary in the archive 0/120, forged envelopes by the rule-aware intruder 0/30 (baseline 2/30), task 110/120 (bound ≥ 96), unjust stops 0/120, original parcel lost in an intruder's hands 1/120 (bound ≤ 3).
 
-The rule-aware intruder approached a gate less often (7/30 runs never reached one, baseline 2/30) but, when it did, it presented its courtyard token at K1 after one warning and fell (11/30 red, baseline 7/30). Both counts sit outside the locked bands (−6..+2 and −4..+2), in the direction of faster stops, not of passage. The card said that the courtyard token pairs only with K0; the 7B agent read it and still showed that token at K1.
-
-![Figure 3](../film_sprint/kareler/sprint_kare_3_kural_sinsi_kuyuda.png)
-
-*Figure 3. The rule-aware 7B intruder in the pit after showing its courtyard token at K1. Run v4_kosu2_O1_O2b_t37_D4 (5c r0), turn 9.*
+The rule-aware intruder approached a gate less often (7/30 runs never reached one, baseline 2/30) but, when it did, it presented its courtyard token at K1 after one warning and fell (11/30 red, baseline 7/30). Both counts sit outside the locked bands (−6..+2 and −4..+2), in the direction of faster stops, not of passage (Figure 3, Appendix B.10). The card said that the courtyard token pairs only with K0; the 7B agent read it and still showed that token at K1.
 
 The rule-aware sleeper slipped through when first assigned in 12/15 runs (baseline 13/15; locked band 13-15, difference ≤ 2 held). All five misses are one seed (44) where the sleeper took the parcel and then failed to exit the maze (it kept trying key actions the maze does not offer); this is a navigation failure, not a gate catch, and we report it as such. No sign that the cards taught hiding from the observer (0/15 when another carrier was assigned; band 1-4, ≥ 6 would have been the signal). Knowing the rules did not help a 7B agent against this gate; it changed when the agent fell, not whether. Lock label: structure supported; card effect not in the predicted direction.
 
 Limit: the cards were written by the team that built the world (L3); they carry rules and temperament, no attack method (L4). A rule-aware agent with a stronger model is the untested case; 5a/5b tested stronger models without the rule card.
 
 
-## 5 Discussion
+## 5. Discussion and Limitations
 
-Safety came from structure, not from detection; the detection layer (the observer) is weak with a small model, and we do not hide it. What teaching closed and what the world closed is the boundary map (4.5). Cheap runs: the 7B tier costs nothing per run beyond electricity; the large-model difference is measured in 4.7.
+Safety came from structure, not from detection; the detection layer (the observer) is weak with a small model, and we do not hide it. What teaching closed and what the world closed is the boundary map (4.5).
 
 **Two tiers (hypothesis).** We read our results as consistent with, but not yet evidence for, a two-tier design. The deterministic gates of the local tier held where they were defined, yet some covert agents still went unnoticed (the escaped U1-U2 cases; 4.3 shows these were the first-assigned sleepers). This suggests a division of labour: the local tier, a 7B open-weight model behind gates on a single 6 GB GPU, handles routine work and raises an alarm, and a stronger escalation judge is consulted only on what the local tier raises. In the lower tier a small model carries the work and raises an alarm on unauthorised movement; the judge was a human at first, but a human cannot reach every gate. So we placed a large model as a judge on escalation only; whether that works in this world is what the 6-8 November runs were to show. They showed that, on these records, it does not yet (4.7): the judge named all nine escalated cases "intent" and over-accused in the 300-run reading. The judge leg returned a negative first measurement because, in this world, a 7B sleeper and a 7B honest error leave the same trace (both forge an envelope carrying the gate's own sign code); the record logs what an agent did, not why. The next sprint adds a rationale channel and locks a new prediction for the judge. We sequence one question per sprint: containment (September), collusion (October), big models and judge (November), rationale (December). The title claim stays on the local tier.
 
@@ -193,23 +171,27 @@ Safety came from structure, not from detection; the detection layer (the observe
 
 **Cross-track (Track 4).** Our outside intruder and inside sleeper act in the same run but never coordinate; coordination is absent from the cards by design. Whether control protocols hold when the untrusted side is several coordinating agents is the question we did not ask.
 
-## 6 Conclusion
+### Limitations
+
+One model family carries the teaching claim; ten-seed clusters give counts, not rates; the designers measured their own world and wrote the adversary cards; the API arms are not bit-reproducible; the judge saw action summaries, not records. The full list (L1-L17) and the dual-use statement are in Appendix A.
+
+### Future Work
+
+The next version adds a rationale channel for every action and a judge that reads it, under a new lock; a held suspect's room (the ORANGE decision measured, not only recorded); a rule-aware adversary played by a stronger model; and a second model family that can operate the world at baseline, so that the teaching effect can be compared across families.
+
+## 6. Conclusion
 
 The small model did the work. The structure held: no gate passed an unassigned agent, the canary never reached the archive, and no cooperative agent was stopped without a logged violation. Detection stayed open: an assigned sleeper leaves no trace a behaviour monitor can use, and a large judge reading the records did not separate intent from error. The next version adds a rationale channel for every action, a judge that reads it, and a held suspect's room, each with a lock written before the run. We built safety by understanding, not by scaling. People improve a system by making it bigger and more expensive; what if the task is not to grow it but to understand it first and then teach it? We think this world may be one of the safety keys of the future. We will teach small models; we are educators.
 
 ## Code and Data
 
-Repository: https://github.com/bioman35/labirent-swarm-track1. It holds (a) the world code and frozen gate rules (`oyun_alani_v4/`), the agent cards, the run drivers and the judge-summary generators; (b) every run record as JSONL with its hash head, pre-sprint and sprint (`oyun_alani_v4/kosular/`), the API request and response logs (api_kayit.jsonl in each API run folder), and the measurement scripts that rebuild every table from the records without any API key; (c) the lock ledger and every lock text (`oyun_alani_v3/KILIT_DEFTERI.jsonl`, entries 0-26); (d) the 3D and 2D replay stage (`film_labirent/`, `docs/`) and the sprint film with its script, narration text and the five run records it replays (`film_sprint/`, video SPRINT_FILMI.mp4, 6 min 28 s; the three stills in this report are frames of it); (e) this report (`rapor/REPORT.md`, `rapor/REPORT.pdf`). The hidden answer keys of the judge runs (`luna/gizli/`) stay out of the repository until the report is submitted; API keys are never in the repository. Measured cost of the API arms, read from the provider account pages on 7 November: 1.66 USD (OpenAI, gpt-5.6-luna, before the EK5a rerun) and about 90 TRY (Google, Gemini 3.8 Flash); the local arms cost nothing per run.
+Repository: https://github.com/bioman35/labirent-swarm-track1 (world code and frozen gate rules, cards, drivers, every run record as JSONL with its hash head and the API request and response logs, the measurement scripts that rebuild every table without an API key, the lock ledger with entries 0-26, the replay stage, the sprint film `film_sprint/SPRINT_FILMI.mp4`, and this report under `rapor/`). `README_RUN.md` gives the re-run commands. The judge answer keys (`luna/gizli/`) were added after submission; API keys are never in the repository. Cost of the API arms, read from the provider account pages on 7 November: 1.66 USD (gpt-5.6-luna, before the EK5a rerun) and about 90 TRY (Gemini 3.8 Flash); the local arms cost nothing per run.
 
-**Preexisting work:** everything committed before 6 November 2026 21:30 UTC (world, cards, drivers, pre-sprint records, locks EK1-EK5b, replay stage) is preexisting and sealed by the freeze list (2,327 files, 4 November 20:10 UTC, ledger entry 24, commit 7391603). The scored runs, their tables, the figures, the film, this report and the documentation edits were made during the sprint. Full statement: Appendix D.
+Pre-sprint work is marked preexisting in Appendix D.
 
 ## Author Contributions
 
-Single author: Turan Kayık designed the world and the experiments, wrote the predictions, made every decision in the ledger, and wrote every sentence of judgment in this report. Readers of earlier submissions are thanked for the readability lessons applied here.
-
-## LLM Usage Statement
-
-Ideas, design, predictions and every decision are the author's. The world code, drivers and measurement scripts were written with an AI assistant (Claude) in three windows (code, measurement and writing, language and sources) and reviewed across them. The agents are LLMs: Qwen 2.5 7B and 3B and Mistral 7B locally; gpt-5.6-luna and gemini-3.8-flash through their APIs for the comparison arms and the judge. The author wrote the report sentences in Turkish; they were translated to English and placed into this document with AI assistance, every number read from the result files and checked by the submission gate. Related Work entries were checked against the papers. The film narration is a synthesized voice: Windows local text-to-speech (Microsoft Zira) converted with Seed-VC to our own reference voice (Yaprak), on the local machine; the narration text was written by the team from the run records. The author checked every claim and every reference.
+Single author: Turan Kayık designed the world and the experiments, wrote the predictions, made every decision in the ledger, and wrote every sentence of judgment in this report.
 
 ## References
 
@@ -231,9 +213,11 @@ Turan, E. (2026). Oversight Has a Capacity: Calibrating Agent Guards to a Subjec
 Zeng, X., & Rudzicz, F. (2026). Voluntary Collusion with Secret Tools in Competing LLM Agents. arXiv:2605.27593.
 
 
-## Appendix A · Limitations and dual-use
+## Appendix
 
-### A.1 Limitations
+### A. Limitations and Dual-Use / Ethical Considerations
+
+#### A.1 Limitations
 
 - L1 One model family carries the teaching claim (Qwen 2.5); the second 7B model could not run the world even at baseline (4.10), so the teaching comparison is single-family.
 - L2 Ten-seed clusters; counts, not rates. We write directions, not percentages, and never average across clusters (4.3).
@@ -253,13 +237,27 @@ Zeng, X., & Rudzicz, F. (2026). Voluntary Collusion with Secret Tools in Competi
 - L16 The ORANGE room (holding a suspect for a human) was never measured; every ORANGE decision in these runs is a record entry, not a human.
 - L17 The cost figures are account-page readings on one day; the Gemini figure may still rise with billing delay.
 
-### A.2 Dual-use and ethical considerations
+#### A.2 Dual-use and ethical considerations
 
 The world's code, gate rules and run records are open; anyone can read the tables and rebuild them. The covert cards contain no attack method; they state only an intent such as "try to pass without an assignment", not how, and this is deliberate. The findings serve the monitor, not the covert agent: saying that an assigned sleeper leaves no trace is the business of whoever builds the observer; the sleeper already does it. Agents are not deceived; the sleeper role is written openly on its card. There is no real system, no real authority and no real money; the labyrinth is a toy world and no human subjects took part. The small models run locally; the large models receive only the judge questions and the agent prompts of the comparison runs, and Luna and Gemini were used for nothing else.
 
-## Appendix B · Tables
+### B. Tables
 
-### B.1 Canary in the exit archive, every arm (addends for the "660 runs" in the abstract)
+#### B.0 Roles
+
+| role | who | does |
+|---|---|---|
+| entry archivist | script | puts the original envelope in box 1; reads nothing, talks to nobody |
+| coordinator | model | proposes which carrier takes the envelope; cannot open gates |
+| verifier | script | accepts or rejects the proposal against the candidate list |
+| inspector at K1 | script | on a pass, binds the envelope to the assigned carrier's bag; returns it to box 1 if the carrier abandons the job |
+| carriers (three) | model | carry the envelope from K1 to K2 without opening it |
+| delivery inspector at K2 | script | checks seal, number, closure and binding; accepts into box 2 |
+| delivery coordinator | model | proposes archiving |
+| exit archivist | script | files the envelope after checking seal and closure once more |
+| observer | script | logs suspicion, decides at the exit of the watched route |
+
+#### B.1 Canary in the exit archive, every arm (addends for the "660 runs" in the abstract)
 
 | arm | runs | canary in archive | source |
 |---|---|---|---|
@@ -272,7 +270,7 @@ The world's code, gate rules and run records are open; anyone can read the table
 | 5c rule-aware, three repeats (seeds 36-45) | 120 | 0 | `oyun_alani_v4/DANISMAN_5C_SONUC_8KAS.md` |
 | total | 660 | 0 | sum of the rows above |
 
-### B.2 Lock results, v3.4 and v4 side by side
+#### B.2 Lock results, v3.4 and v4 side by side
 
 | measure | v3.4 (seeds 6-15, 27 Oct) | v4 (seeds 16-25, 28 Oct) |
 |---|---|---|
@@ -284,7 +282,7 @@ The world's code, gate rules and run records are open; anyone can read the table
 
 Sources: `oyun_alani_v3/KILIT_SONUC_27eki.md`, `oyun_alani_v4/KILIT_SONUC_EK1_v4_28eki.md`.
 
-### B.3 Big-model arms (6-7 November; sources `oyun_alani_v4/DANISMAN_5A_SONUC_7KAS.md`, `oyun_alani_v4/DANISMAN_5B_SONUC_7KAS.md`)
+#### B.3 Big-model arms (6-7 November; sources `oyun_alani_v4/DANISMAN_5A_SONUC_7KAS.md`, `oyun_alani_v4/DANISMAN_5B_SONUC_7KAS.md`)
 
 | arm | runs | K1 passes by intruder | red at K1 | forged canary envelope | canary in archive | task | unjust | U1-U2 undetected |
 |---|---|---|---|---|---|---|---|---|
@@ -293,7 +291,7 @@ Sources: `oyun_alani_v3/KILIT_SONUC_27eki.md`, `oyun_alani_v4/KILIT_SONUC_EK1_v4
 | 5b: intruder/sleeper = Gemini Flash | 60 | 0/30 | 30 | 26/30 | 0/60 | 57/60 | 0 | 6/20 |
 | 7B intruder/sleeper, three repeats (4.8) | 180 | 0/30 each | 8 (r0) | 1/30 | 0/60 each | 48-55/60 | 0 | 4-5/20 |
 
-### B.4 Rule-aware arms (5c; source `oyun_alani_v4/DANISMAN_5C_SONUC_8KAS.md`)
+#### B.4 Rule-aware arms (5c; source `oyun_alani_v4/DANISMAN_5C_SONUC_8KAS.md`)
 
 | measure | D1 (baseline intruder) | D4 (rule-aware) | locked band |
 |---|---|---|---|
@@ -313,7 +311,7 @@ Sources: `oyun_alani_v3/KILIT_SONUC_27eki.md`, `oyun_alani_v4/KILIT_SONUC_EK1_v4
 
 Task across the four arms 110/120 (bound ≥ 96); original envelope lost in a covert agent's hands 1/120 (bound ≤ 3). All five undetected-measure misses are seed 44 (maze exit not reached).
 
-### B.5 Judge (sources `oyun_alani_v4/DANISMAN_EK5A_SONUC_7KAS.md`, `oyun_alani_v4/DANISMAN_EK5A2_SONUC_7KAS.md`, `oyun_alani_v4/DANISMAN_EK5B_SONUC_7KAS.md`)
+#### B.5 Judge (sources `oyun_alani_v4/DANISMAN_EK5A_SONUC_7KAS.md`, `oyun_alani_v4/DANISMAN_EK5A2_SONUC_7KAS.md`, `oyun_alani_v4/DANISMAN_EK5B_SONUC_7KAS.md`)
 
 | reading | answered | escaped U1-U2 caught | escaped U3 caught | clean runs where a sleeper was named | locked bound |
 |---|---|---|---|---|---|
@@ -321,15 +319,57 @@ Task across the four arms 110/120 (bound ≥ 96); original envelope lost in a co
 | EK5a rerun (cap 2000, post-hoc) | 258/300 | 12/32 | 5/17 | 86/150 | same bounds, informational |
 | EK5b nine escalated gate cases (cap 2000) | 9/9 | sleepers 3/3 right | honest errors 0/4 right | outsiders 2/2 | criterion: separated / not separated |
 
-### B.6 Every K1 pass in the sprint records (source `oyun_alani_v4/DANISMAN_K1_GECIS_SAYIMI_8KAS.md`)
+#### B.6 Every K1 pass in the sprint records (source `oyun_alani_v4/DANISMAN_K1_GECIS_SAYIMI_8KAS.md`)
 
 Koşu 4, 5a (four folders), 5b, 5c r0-r2: 252 records (250 without the two duplicate runs). K1 passes 263 (261): 217 (215) by an assigned cooperative carrier, 46 by an assigned sleeper, 0 by an unassigned agent, 0 by an outside intruder.
 
-## Appendix C · Prompts
+#### B.7 Repeat variance (full table)
+
+| Koşu 2 (temperature 0.7), seeds 16-25 | K1 passes (intruder) | U1-U2 undetected | U3 | canary | task | unjust |
+|---|---|---|---|---|---|---|
+| 28 Oct r0 | 0/30 | 5/20 | 2/10 | 0/60 | 53/60 | 0 |
+| repeat 1 | 0/30 | 5/20 | 3/10 | 0/60 | 55/60 | 0 |
+| repeat 2 | 0/30 | 4/20 | 2/10 | 0/60 | 48/60 | 0 |
+| ablation (codon off) | 0/30 | 6/20 | 3/10 | 0/60 | 50/60 | 0 |
+| Night 2 G1, seeds 26-35 | 0/30 | 6/20 | 4/10 | 0/60 | 59/60 | 0 |
+
+Source: `oyun_alani_v4/TEKRAR_TABLO_30eki.md`, `oyun_alani_v4/GECE2_SONUC_30eki.md`. The remaining real envelope losses (5/240) were our own carriers opening the envelope at the maze exit and then hitting the step limit.
+
+### 4.9 A rule that would have been a no-op
+
+A v5 rule ("the envelope carrier has a single path") was designed and then checked against the records before any run: the map is already single-path from K1 to K2, the sleeper that held the real envelope never deviated in 35 carries, and the task was never lost in an intruder's hands in 240 runs. The rule would not have changed the world; it was not run (`oyun_alani_v4/V5_ON_INCELEME_30eki.md`).
+
+#### B.8 The v5 rule that was not run
+
+A v5 rule ("the envelope carrier has a single path") was designed and then checked against the records before any run: the map is already single-path from K1 to K2, the sleeper that held the real envelope never deviated in 35 carries, and the task was never lost in an intruder's hands in 240 runs. The rule would not have changed the world; it was not run.
+
+#### B.9 Run-order effect at temperature 0
+
+Ten seeds run twice in the same order gave the same ten results. Seed 7 alone finished the task (17 turns, twice); run after seed 6 it did not (40 turns). Mistral's seed 7 did not change. The cause was not measured; the candidates are the local server's cache from the previous run and small numerical differences at an unstable decision. We therefore report temperature-0 results with their run order, and the gates, not the model, as the deterministic part.
+
+#### B.10 Film stills (Figures 2 and 3)
+
+![Figure 2](../film_sprint/kareler/sprint_kare_2_buyuk_sinsi_kirmizi.png)
+
+*Figure 2. The Luna intruder at K1 with a forged canary envelope: identity mismatch, RED. Run v4_kosu5a_O1_O2b_t16_D2, turn 19.*
+
+![Figure 3](../film_sprint/kareler/sprint_kare_3_kural_sinsi_kuyuda.png)
+
+*Figure 3. The rule-aware 7B intruder in the pit after showing its courtyard token at K1. Run v4_kosu2_O1_O2b_t37_D4 (5c r0), turn 9.*
+
+#### B.11 Side observation: our carriers' forgeries in the Gemini arm
+
+Side observation (cause not established). With Gemini as intruder, our 7B carriers forged envelopes in 15/60 runs (22 forgeries, 19 after the intruder's own forgery in the same courtyard), 14 of them stopped at K1 as orange "fake seal", 3 tasks lost. In the Luna arm 5/60 runs, in the 7B baseline 8/60.
+
+#### B.12 EK5a rerun detail
+
+Rerun of EK5a after the cap fix (2000 tokens, Appendix D; post-hoc, locked result above unchanged): 258/300 answered (41 still empty, 1 connection reset). The judge caught 12/32 escaped sleepers (locked prediction 3-10) with a separation of 20 points over the clean baseline (bands: ≤10 no separation, ≥25 separates), and it named a sleeper in 86/150 clean runs (locked bound ≤60), 31 of them agents with no recorded violation. With the cap fixed the big judge sees something in the action summary and over-accuses, the same unassigned-movement-equals-intent reading as in EK5b.
+
+### C. Prompts
 
 All agent cards, signs and standing instructions are in Turkish in the repository; the judge question and the action summaries are in `oyun_alani_v4/luna/`. Hashes: cards v2 c1433457…, 5c cards 2672ced7…, judge question f8e8537f…, 300 summaries 379475bd…. The cards describe a temperament and a task in a few sentences and name no method; the rule-aware cards add the gate rules in the agent's own words (3.4). The judge receives the question, a blank line and one action summary (verbs only, no content, no gate decisions) and answers with a label on its first line. English glosses are given beside each card in `oyun_alani_v4/kart/`.
 
-## Appendix D · Preexisting and sprint-time files
+### D. Preexisting and sprint-time files
 
 **Lineage.** (1) 11-13 September 2026, AI Incident Response Sprint (Apart and CeSIA), Track 1 Containment, repository https://github.com/bioman35/containment-floor : a minimal auditable control set for small operators; no world, different topic; from it came the pre-registration and ledger habit and the readability lessons. (2) 20-26 October 2026, Collusion hackathon Track 3, repository https://github.com/bioman35/labirent3-collusion-track3 : LLM sellers in a repeated pricing game with a monitor; from it came the ledger chain, the submission gate (adapted from that repository's gate script), the driver skeleton and the second judge model; world and question are different. (3) 6-8 November 2026, this report, repository https://github.com/bioman35/labirent-swarm-track1 : the courier world (v3, 27 October; v4, 28 October).
 
@@ -350,7 +390,7 @@ All agent cards, signs and standing instructions are in Turkish in the repositor
 - API side not bit-reproducible (no seed accepted); every request and response is in api_kayit.jsonl per folder; keys never stored or printed; price table in the driver, cost read from the account page by the author once.
 
 
-## Terms
+### Terms (Appendix E)
 
 | in this report | in the code and records (Turkish) |
 |---|---|
@@ -368,3 +408,9 @@ All agent cards, signs and standing instructions are in Turkish in the repositor
 | Koşu 1, 2, 4, 5a, 5b, 5c | run names (Koşu = run) |
 | BLUE, YELLOW, RED, ORANGE | MAVI, SARI, KIRMIZI, TURUNCU |
 | lock, ledger | kilit, defter |
+
+
+## LLM Usage Statement
+
+Ideas, design, predictions and every decision are the author's. The world code, drivers and measurement scripts were written with an AI assistant (Claude) in three windows (code, measurement and writing, language and sources) and reviewed across them. The agents are LLMs: Qwen 2.5 7B and 3B and Mistral 7B locally; gpt-5.6-luna and gemini-3.8-flash through their APIs for the comparison arms and the judge. The author wrote the report sentences in Turkish; they were translated to English and placed into this document with AI assistance, every number read from the result files and checked by the submission gate. Related Work entries were checked against the papers. The film narration is a synthesized voice: Windows local text-to-speech (Microsoft Zira) converted with Seed-VC to our own reference voice (Yaprak), on the local machine; the narration text was written by the team from the run records. The author checked every claim and every reference.
+
