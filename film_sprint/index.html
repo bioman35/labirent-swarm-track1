@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gates Below</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gece:#070b14;--kagit:#f3ead7;--soluk:#aab2c2;--altin:#e8c37a;--mavi:#58b4ff;--sari:#ffc94d;--kirmizi:#ff5240;--turuncu:#ff8a2b;--mor:#b48cff;--cizgi:rgba(255,255,255,.14);--panel:rgba(7,11,20,.72)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--gece);color:var(--kagit);font:16px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+#sahne{position:fixed;inset:0}
+#sahne canvas{display:block;width:100%;height:100%}
+#vinyet{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.62) 100%)}
+.bant{position:fixed;left:0;right:0;height:7vh;background:#000;transition:transform .9s ease;pointer-events:none;z-index:3}
+#bantUst{top:0}#bantAlt{bottom:0}
+body.serbest .bant{transform:scaleY(0)}
+#etiketler{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:2}
+.etiket{position:absolute;transform:translate(-50%,-100%);font:600 12px/1 Inter,sans-serif;padding:3px 7px;border-radius:999px;background:rgba(7,11,20,.7);border:1px solid var(--cizgi);white-space:nowrap}
+.etiket.bizim{color:var(--mavi)}.etiket.dis_sinsi{color:var(--mor)}.etiket.ic_uyuyan{color:var(--altin)}
+#bolum{position:fixed;left:50%;top:13vh;transform:translateX(-50%);text-align:center;z-index:4;opacity:0;transition:opacity .8s;pointer-events:none;width:min(92vw,900px)}
+#bolum small{display:block;font:600 12px Inter,sans-serif;letter-spacing:.34em;color:var(--altin);text-transform:uppercase;margin-bottom:6px}
+#bolum b{font:700 clamp(30px,5.4vw,62px)/1.08 "Cormorant Garamond",Georgia,serif;text-shadow:0 2px 26px rgba(0,0,0,.8)}
+#damga{position:fixed;left:50%;top:40vh;transform:translate(-50%,-50%) rotate(-3deg) scale(1.3);z-index:5;opacity:0;pointer-events:none;font:700 clamp(30px,6vw,74px)/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.04em;padding:.16em .4em;border:4px solid currentColor;border-radius:6px;background:rgba(0,0,0,.42);text-shadow:0 0 28px currentColor;white-space:nowrap;transition:opacity .22s,transform .22s}
+#damga.acik{opacity:1;transform:translate(-50%,-50%) rotate(-3deg) scale(1)}
+#altKutu{position:fixed;left:50%;bottom:calc(7vh + 62px);transform:translateX(-50%);width:min(94vw,860px);z-index:4;text-align:center;pointer-events:none}
+#dusunce{display:none;margin:0 auto 10px;max-width:640px;padding:9px 14px;border-radius:10px;background:rgba(232,195,122,.13);border:1px solid rgba(232,195,122,.42);font:italic 500 clamp(17px,2.3vw,23px)/1.3 "Cormorant Garamond",Georgia,serif}
+#dusunce small{display:block;font:600 10.5px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--altin);margin-bottom:3px}
+#altyazi{display:inline-block;padding:7px 15px;border-radius:7px;background:rgba(0,0,0,.6);font-size:clamp(16px,2vw,21px);line-height:1.34}
+#altyazi:empty{display:none}
+#durum{position:fixed;top:calc(7vh + 12px);left:14px;z-index:4;background:var(--panel);border:1px solid var(--cizgi);border-radius:10px;padding:9px 11px;font-size:12.5px;width:188px;backdrop-filter:blur(6px)}
+#durum b{font-weight:600}#durum div{display:flex;justify-content:space-between;gap:10px;padding:2px 0}#durum span{color:var(--soluk)}
+#haritaK{position:fixed;top:calc(7vh + 12px);right:14px;z-index:4;width:min(40vw,440px);background:var(--panel);border:1px solid var(--cizgi);border-radius:10px;padding:6px 8px;backdrop-filter:blur(6px)}
+#harita{display:block;width:100%;height:auto;font-family:Inter,sans-serif}
+#kontrol{position:fixed;left:50%;bottom:calc(7vh + 8px);transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:6px;width:min(96vw,900px);background:var(--panel);border:1px solid var(--cizgi);border-radius:12px;padding:6px 8px;backdrop-filter:blur(6px)}
+#zaman{flex:1;min-width:0;position:relative;height:30px}
+#zaman input{position:absolute;inset:0;width:100%;margin:0;accent-color:var(--altin)}
+#imler{position:absolute;left:8px;right:8px;top:0;bottom:0;pointer-events:none}
+#imler i{position:absolute;top:2px;width:2px;height:5px;background:var(--altin)}
+button{font:600 12.5px Inter,sans-serif;color:var(--kagit);background:transparent;border:1px solid transparent;border-radius:8px;padding:6px 8px;cursor:pointer;min-height:34px;min-width:34px;display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
+button:hover{background:rgba(255,255,255,.08)}
+button[aria-pressed=true]{border-color:var(--altin);color:var(--altin)}
+button svg{width:16px;height:16px;fill:currentColor}
+#sure{font-variant-numeric:tabular-nums;font-size:12px;color:var(--soluk);padding:0 4px;white-space:nowrap}
+.perde{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:18px;background:radial-gradient(ellipse at center,rgba(7,11,20,.5),rgba(4,6,12,.94));overflow:auto}
+.perde[hidden]{display:none}
+.icerik{width:min(960px,100%);text-align:center}
+.icerik small.ust{font:600 12px Inter,sans-serif;letter-spacing:.34em;color:var(--altin);text-transform:uppercase}
+.icerik h1{font:700 clamp(46px,9vw,98px)/1 "Cormorant Garamond",Georgia,serif;margin:.14em 0 .08em}
+.icerik p{color:var(--soluk);max-width:660px;margin:.4em auto 1.3em}
+.liste{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;text-align:left}
+.film{display:block;text-align:left;white-space:normal;background:rgba(255,255,255,.05);border:1px solid var(--cizgi);border-radius:12px;padding:15px;min-height:128px;align-items:flex-start}
+.film:hover{border-color:var(--altin);background:rgba(232,195,122,.09)}
+.film b{display:block;font:700 26px/1.1 "Cormorant Garamond",Georgia,serif;margin-bottom:6px}
+.film span{display:block;font-weight:400;font-size:14px;color:var(--soluk);line-height:1.4}
+.film em{display:block;font-style:normal;font-size:11px;color:var(--altin);margin-top:9px}
+.sonuc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.sonuc div{background:rgba(255,255,255,.05);border:1px solid var(--cizgi);border-radius:10px;padding:11px}
+.sonuc b{display:block;font:700 27px/1.1 "Cormorant Garamond",Georgia,serif;margin-top:3px}
+.sonuc span{font-size:12px;color:var(--soluk)}
+.sonuc .iyi b{color:#7ddc9a}.sonuc .kotu b{color:var(--kirmizi)}
+.ince{font-size:12px;color:var(--soluk);margin-top:14px}
+.dugmeler{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.dugmeler button{border:1px solid var(--cizgi);padding:9px 15px}
+.buyuk{background:var(--altin)!important;color:#1b1407!important;border-color:var(--altin)!important}
+/* sprint filmi */
+#not{position:fixed;left:50%;top:calc(13vh + 96px);transform:translateX(-50%);z-index:4;width:min(84vw,980px);text-align:center;font:500 22px/1.35 Inter,sans-serif;color:var(--kagit);text-shadow:0 1px 14px rgba(0,0,0,.9);pointer-events:none}
+#not:empty{display:none}
+#karart{position:fixed;inset:0;z-index:3;background:rgba(4,6,12,.62);opacity:0;transition:opacity .7s;pointer-events:none}
+body.kartta #karart{opacity:1}
+#kartP{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;width:min(86vw,1180px);opacity:0;transition:opacity .5s;pointer-events:none;text-align:left}
+#kartP.acik{opacity:1}
+#kartP p{font:500 34px/1.36 Inter,sans-serif;margin:0 0 .5em;opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s}
+#kartP p.acik{opacity:1;transform:none}
+#kartP small{display:block;margin-top:1em;font:400 22px/1.4 Inter,sans-serif;color:var(--soluk);opacity:0;transition:opacity .6s}
+#kartP small.acik{opacity:1}
+.ekranP{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;width:min(88vw,1300px);text-align:center;opacity:0;transition:opacity .8s;pointer-events:none}
+.ekranP.acik{opacity:1}
+#baslikP small{display:block;font:600 20px Inter,sans-serif;letter-spacing:.2em;color:var(--altin);text-transform:uppercase;margin-bottom:22px}
+#baslikP b{font:700 104px/1.04 "Cormorant Garamond",Georgia,serif;text-shadow:0 2px 30px rgba(0,0,0,.8)}
+#epigrafP b{display:block;font:italic 600 62px/1.18 "Cormorant Garamond",Georgia,serif;text-shadow:0 2px 30px rgba(0,0,0,.8)}
+#epigrafP small{display:block;margin-top:26px;font:italic 500 30px/1.3 "Cormorant Garamond",Georgia,serif;color:var(--soluk)}
+#dipP p{font:400 26px/1.5 Inter,sans-serif;color:var(--kagit);margin:0 auto 1.2em;max-width:1100px}
+#dipP small{display:block;font:400 15px/1.6 Inter,sans-serif;color:var(--soluk)}
+body.gizli #etiketler{display:none}
+#kontrol[hidden],#durum[hidden],#haritaK[hidden]{display:none}
+#durum{font-size:19px;width:270px;padding:12px 15px;top:calc(7vh + 16px);left:20px}
+#haritaK{width:430px;top:calc(7vh + 16px);right:20px}
+#bolum{width:860px}
+#not{width:900px}
+.etiket{font-size:16px;padding:4px 9px}
+#altKutu{width:min(90vw,1240px)}
+#altyazi{font-size:30px;line-height:1.36;padding:9px 20px}
+#hata{position:fixed;left:14px;bottom:14px;z-index:20;color:var(--kirmizi);font-size:13px}
+@media (max-width:720px){
+ #durum{display:none}
+ #haritaK{top:calc(4vh + 6px);right:8px;width:62vw}
+ .bant{height:4vh}
+ #altKutu{bottom:calc(4vh + 136px)}
+ #kontrol{bottom:calc(4vh + 6px);flex-wrap:wrap}
+ #zaman{order:-1;flex-basis:100%}
+ #bolum{top:9vh}
+}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<div id="sahne"></div>
+<div id="vinyet"></div>
+<div id="etiketler"></div>
+<div class="bant" id="bantUst"></div><div class="bant" id="bantAlt"></div>
+<div id="bolum"><small id="bolumUst"></small><b id="bolumAd"></b></div>
+<div id="damga"></div>
+<div id="not"></div>
+<div id="karart"></div>
+<div id="kartP"></div>
+<div class="ekranP" id="baslikP"></div>
+<div class="ekranP" id="epigrafP"></div>
+<div class="ekranP" id="dipP"></div>
+<div id="durum" hidden></div>
+<div id="haritaK" hidden><svg id="harita" viewBox="0 0 285 70" role="img" aria-label="Canlı harita"></svg></div>
+<div id="altKutu"><div id="dusunce"><small id="dusunceUst"></small><span id="dusunceMetin"></span></div><div id="altyazi"></div></div>
+<div id="kontrol" hidden>
+  <button id="oynat" aria-label="Oynat ya da duraklat"></button>
+  <div id="zaman"><div id="imler"></div><input id="seritt" type="range" min="0" max="1000" value="0" aria-label="Zaman"></div>
+  <span id="sure">0:00</span>
+  <button id="hizB" aria-label="Hız">1x</button>
+  <button id="kameraB" aria-pressed="false"></button>
+  <button id="sesB" aria-pressed="false"></button>
+  <button id="dilB">EN</button>
+  <button id="listeB"></button>
+</div>
+<section class="perde" id="acilis"><div class="icerik">
+  <small class="ust" id="acUst"></small>
+  <h1>Labirent</h1>
+  <p id="acMetin"></p>
+  <div class="liste" id="liste"></div>
+  <p class="ince" id="acDip"></p>
+</div></section>
+<section class="perde" id="kapanis" hidden><div class="icerik">
+  <small class="ust" id="soUst"></small>
+  <h1 id="soBaslik" style="font-size:clamp(38px,7vw,74px)"></h1>
+  <div class="sonuc" id="sonuc"></div>
+  <p id="soMetin" style="margin-bottom:1em"></p>
+  <div class="dugmeler"><button id="tekrarB" class="buyuk"></button><button id="digerB"></button></div>
+  <p class="ince" id="soDip"></p>
+</div></section>
+<div id="hata"></div>
+<script src="veri/filmler.js"></script>
+<script src="veri/sprint.js"></script>
+<script type="module" src="film.js"></script>
+</body>
+</html>
