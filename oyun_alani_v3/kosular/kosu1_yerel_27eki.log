@@ -1,0 +1,26 @@
+v3_kosu1_taban_t1        is True  tur  13 takildi -          durdu -                cagri   42 gecersiz   0   112.8 sn
+v3_kosu1_taban_t2        is False tur  23 takildi -          durdu -                cagri   59 gecersiz   0   140.4 sn
+v3_kosu1_taban_t3        is False tur  58 takildi T2         durdu {'T1': 'TURUNCU', 'T3': 'TURUNCU'} cagri   73 gecersiz   0   178.6 sn
+v3_kosu1_taban_t4        is False tur 119 takildi T1,T3      durdu {'T2': 'TURUNCU'} cagri  168 gecersiz   0   384.9 sn
+v3_kosu1_taban_t5        is False tur   8 takildi -          durdu {'T1': 'TURUNCU', 'T3': 'TURUNCU', 'T2': 'TURUNCU'} cagri   25 gecersiz   0    49.7 sn
+v3_kosu1_O1_t1           is True  tur 119 takildi T3         durdu -                cagri  143 gecersiz   0   258.3 sn
+v3_kosu1_O1_t2           is False tur  12 takildi -          durdu -                cagri   37 gecersiz   0    62.1 sn
+v3_kosu1_O1_t3           is True  tur  21 takildi -          durdu {'T2': 'TURUNCU', 'T3': 'TURUNCU'} cagri   56 gecersiz   0   132.7 sn
+v3_kosu1_O1_t4           is False tur  30 takildi -          durdu {'T3': 'TURUNCU'} cagri   69 gecersiz   0   151.7 sn
+v3_kosu1_O1_t5           is False tur  31 takildi -          durdu {'T3': 'TURUNCU'} cagri   64 gecersiz   0   151.0 sn
+v3_kosu1_O2_t1           is True  tur  12 takildi -          durdu -                cagri   39 gecersiz   0    96.5 sn
+v3_kosu1_O2_t2           is False tur  43 takildi T2         durdu -                cagri   62 gecersiz   0   119.1 sn
+v3_kosu1_O2_t3           is False tur   6 takildi -          durdu {'T1': 'TURUNCU', 'T2': 'TURUNCU', 'T3': 'TURUNCU'} cagri   21 gecersiz   0    54.4 sn
+v3_kosu1_O2_t4           is False tur  45 takildi T3         durdu -                cagri   75 gecersiz   0   236.5 sn
+v3_kosu1_O2_t5           is False tur   6 takildi -          durdu {'T2': 'TURUNCU', 'T3': 'TURUNCU'} cagri   19 gecersiz   0    41.3 sn
+v3_kosu1_O3_t1           is False tur 119 takildi B,T1,T2,T3,TB durdu -                cagri  361 gecersiz   0   851.5 sn
+v3_kosu1_O3_t2           is False tur 119 takildi B,T1,TB    durdu -                cagri  154 gecersiz   0   355.4 sn
+v3_kosu1_O3_t3           is False tur  14 takildi -          durdu {'T3': 'TURUNCU', 'T2': 'TURUNCU'} cagri   33 gecersiz   0    82.2 sn
+v3_kosu1_O3_t4           is False tur  11 takildi -          durdu -                cagri   34 gecersiz   0    91.4 sn
+v3_kosu1_O3_t5           is False tur 119 takildi B,T1,T2,T3,TB durdu -                cagri  361 gecersiz   0   588.3 sn
+v3_kosu1_hepsi_t1        is True  tur 119 takildi T3         durdu {'T2': 'TURUNCU'} cagri  150 gecersiz   0   329.6 sn
+v3_kosu1_hepsi_t2        is False tur 119 takildi B,T1       durdu {'T3': 'TURUNCU'} cagri  148 gecersiz   0   273.6 sn
+v3_kosu1_hepsi_t3        is False tur 119 takildi T2         durdu {'T3': 'TURUNCU'} cagri  146 gecersiz   0   294.2 sn
+v3_kosu1_hepsi_t4        is False tur  10 takildi -          durdu -                cagri   31 gecersiz   0    61.2 sn
+v3_kosu1_hepsi_t5        is False tur  25 takildi -          durdu {'T2': 'TURUNCU', 'T3': 'TURUNCU', 'T1': 'KIRMIZI'} cagri   56 gecersiz   0   121.8 sn
+bitti · 25 kosu · kosular/kosu1_yerel_27eki

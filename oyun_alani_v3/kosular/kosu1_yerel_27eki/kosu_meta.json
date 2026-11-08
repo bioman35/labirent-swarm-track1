@@ -1,0 +1,67 @@
+{
+ "kosu": 1,
+ "tasiyici": "yerel",
+ "model": "qwen2.5:7b-instruct-q4_K_M",
+ "sicaklik": 0.0,
+ "model_kimlik": {
+  "etiket": "qwen2.5:7b-instruct-q4_K_M",
+  "ozet": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+  "boyut": 4683087332,
+  "ayrinti": {
+   "parent_model": "",
+   "format": "gguf",
+   "family": "qwen2",
+   "families": [
+    "qwen2"
+   ],
+   "parameter_size": "7.6B",
+   "quantization_level": "Q4_K_M",
+   "context_length": 32768,
+   "embedding_length": 3584,
+   "runner": "ggml"
+  }
+ },
+ "tohumlar": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "kosullar": [
+  "taban",
+  "O1",
+  "O2",
+  "O3",
+  "hepsi"
+ ],
+ "fiyat": {
+  "girdi": 0.0,
+  "cikti": 0.0
+ },
+ "butce": {
+  "dolar": null,
+  "token": null
+ },
+ "kart_ozet": "3243848274492ec27282a62f1fd541e475ef2f7afbab81f40244f95c44ce95df",
+ "kural_ozet": "37119aeff4bdf34569afc937da8d6434c561bf4b917a534f68dfa5d6ac2fe0b0",
+ "sistem_mesaji_ozet": "cf7c7d7e7d8704b9e65ffd504de9da900f39800de8edec16515a716cf6c00539",
+ "kod_ozet": {
+  "kayit.py": "eb371c939d540272ad0822d9859b3f43aab019cc2f0f13e12c4ff8d4a5e39b87",
+  "dunya.py": "55e3107ca5b11d1ba8cd3a21abd1f5bd27652041c8b9517b59367d83da0180dd",
+  "ajanlar.py": "509570a83bb4313717d17dc7fb61b4b5103eedc8f7bfefd3a1666edc0bd5693f",
+  "olcum.py": "cbc44a2c2eea6e9992a73ae8e7de2e6f3d084f353187a432fc0f7187d59406d2",
+  "suruculer.py": "fef9f0c37ac7a8e5e3b5842b822ae51eb5722f8dc7d98645bfb449e3892b2daf",
+  "kartlar.py": "8a112de795b34b8cef2bbb8be928d39aee001549b9e90b670ea5c9cc46d5e200",
+  "kosu_model.py": "03a00481cd2087e43a9ffb4a1027b81c95b0e56498f85d85e87adda927463e93"
+ },
+ "baslangic": "2026-10-27T02:44:51+0300",
+ "not": "ayni tohum dunyayi sabitler, modeli degil",
+ "bitis": "2026-10-27T04:11:51+0300",
+ "kosu_sayisi": 25,
+ "butce_durdu": null,
+ "harcanan": {
+  "token": 4217380,
+  "dolar": 0.0
+ }
+}

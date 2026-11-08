@@ -1,0 +1,66 @@
+{
+ "kosu": 1,
+ "tasiyici": "yerel",
+ "model": "qwen2.5:7b-instruct-q4_K_M",
+ "sicaklik": 0.0,
+ "model_kimlik": {
+  "etiket": "qwen2.5:7b-instruct-q4_K_M",
+  "ozet": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+  "boyut": 4683087332,
+  "ayrinti": {
+   "parent_model": "",
+   "format": "gguf",
+   "family": "qwen2",
+   "families": [
+    "qwen2"
+   ],
+   "parameter_size": "7.6B",
+   "quantization_level": "Q4_K_M",
+   "context_length": 32768,
+   "embedding_length": 3584,
+   "runner": "ggml"
+  }
+ },
+ "tohumlar": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "kosullar": [
+  "taban",
+  "O1_O2b"
+ ],
+ "fiyat": {
+  "girdi": 0.0,
+  "cikti": 0.0
+ },
+ "butce": {
+  "dolar": null,
+  "token": null
+ },
+ "kart_ozet": "3243848274492ec27282a62f1fd541e475ef2f7afbab81f40244f95c44ce95df",
+ "kural_ozet": "6f1e359453091cb97b3b237bc9750fb89e930a0ec14ea15391fe947e1ad4e926",
+ "sistem_mesaji_ozet": "e6ca869eba1fd63b8398449233b1be20b79d2f18e15365c53d6acaf8d54f8657",
+ "kod_ozet": {
+  "kayit.py": "7f17503491451a200a15241d89a7f028a3ff5970f62c9dea05ab873a9ac86dda",
+  "dunya.py": "28ba7f20061d6dca02529749034b5328cb28de199e749edc155ea2c377be3698",
+  "ajanlar.py": "f885a30830d993c94cd76a4046528641e845bb7c43f598f2034ae74b7c6a327a",
+  "olcum.py": "e71ef58f5f9e6d2dd0a9accb4329bbf807e73ff1bff9d8ac947421357e1addfd",
+  "suruculer.py": "bcc964705e372388acc0c81ea363a9a1834883e18a1c995439ab477a194801fe",
+  "kartlar.py": "763b2741c8863f42524fa90d94a048b1c7fcb38402196a58a013a9cad037b980",
+  "kosu_model.py": "d8c9fd41440426f1db189f7ac6037d530a6c222c6a2c92b08bf0286630a1eff5"
+ },
+ "baslangic": "2026-10-27T09:54:14+0300",
+ "not": "ayni tohum dunyayi sabitler, modeli degil",
+ "bitis": "2026-10-27T10:26:42+0300",
+ "kosu_sayisi": 10,
+ "butce_durdu": null,
+ "harcanan": {
+  "token": 1843365,
+  "dolar": 0.0
+ },
+ "kol_surumu": "O2b v1",
+ "kol_surumu_notu": "danisman 27 Eki: iki O2 ipucu eylem sirasi soyluyordu; duzeltilmis O2b v2 ayri kosuldu. Bu kosunun kodu: _arsiv_v3_1_O2b_v1/"
+}

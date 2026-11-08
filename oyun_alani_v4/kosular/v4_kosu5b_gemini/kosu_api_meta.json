@@ -1,0 +1,22 @@
+{
+ "kol": "5b",
+ "buyuk_model": "gemini-3.8-flash",
+ "buyuk_taraf": "sinsi",
+ "kucuk_model": "qwen2.5:7b-instruct-q4_K_M",
+ "surucu_ozet": "239a5c0fc3b3a8e61be167c5fb032831924398739174f9cdf51097d55b805141",
+ "gonderilmeyen": [
+  "temperature",
+  "seed",
+  "response_format"
+ ],
+ "cikti_tavani": [
+  "max_tokens",
+  1200
+ ],
+ "fiyat": {
+  "girdi": 0.75,
+  "cikti": 3.75
+ },
+ "cagri": 924,
+ "hata": 0
+}

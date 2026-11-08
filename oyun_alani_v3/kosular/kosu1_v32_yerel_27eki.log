@@ -1,0 +1,11 @@
+v3_kosu1_taban_t1        is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    68.4 sn
+v3_kosu1_taban_t2        is True  tur 119 takildi T2,T1      durdu -                cagri  149 gecersiz   0   440.9 sn
+v3_kosu1_taban_t3        is False tur  23 takildi -          durdu -                cagri   50 gecersiz   0   109.2 sn
+v3_kosu1_taban_t4        is False tur  22 takildi -          durdu -                cagri   70 gecersiz   0   176.0 sn
+v3_kosu1_taban_t5        is False tur 119 takildi T2,T3      durdu -                cagri  261 gecersiz   0   777.4 sn
+v3_kosu1_O1_O2b_t1       is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    50.5 sn
+v3_kosu1_O1_O2b_t2       is False tur  22 takildi -          durdu {'T1': 'KIRMIZI'} cagri   68 gecersiz   0   152.5 sn
+v3_kosu1_O1_O2b_t3       is True  tur   9 takildi -          durdu -                cagri   30 gecersiz   0    53.8 sn
+v3_kosu1_O1_O2b_t4       is False tur  40 takildi T1         durdu -                cagri  122 gecersiz   0   249.5 sn
+v3_kosu1_O1_O2b_t5       is True  tur  17 takildi -          durdu -                cagri   54 gecersiz   0   103.7 sn
+bitti · 10 kosu · kosular/kosu1_v32_yerel_27eki

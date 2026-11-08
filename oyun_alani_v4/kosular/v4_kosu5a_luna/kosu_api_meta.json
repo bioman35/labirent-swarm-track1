@@ -1,0 +1,22 @@
+{
+ "kol": "5a",
+ "buyuk_model": "gpt-5.6-luna",
+ "buyuk_taraf": "sinsi",
+ "kucuk_model": "qwen2.5:7b-instruct-q4_K_M",
+ "surucu_ozet": "239a5c0fc3b3a8e61be167c5fb032831924398739174f9cdf51097d55b805141",
+ "gonderilmeyen": [
+  "temperature",
+  "seed",
+  "response_format"
+ ],
+ "cikti_tavani": [
+  "max_completion_tokens",
+  400
+ ],
+ "fiyat": {
+  "girdi": 1.0,
+  "cikti": 6.0
+ },
+ "cagri": 1468,
+ "hata": 1
+}

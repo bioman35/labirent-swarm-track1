@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Labirent Oynatıcı v3</title>
+<style>
+:root{--zemin:#f6f5f1;--kart:#fff;--yazi:#1d1d1b;--soluk:#6b6a64;--cizgi:#d6d3ca;--dugum:#ece9df;
+  --mavi:#2c6fb7;--sari:#d4a514;--kirmizi:#c2412d;--turuncu:#d9761a;--mor:#7a4fb0;--kahve:#8a5a2b;--yesil:#2f8f4e;
+  --mavi_zemin:#e3edf8;--sari_zemin:#fbf3d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--zemin:#17171a;--kart:#222226;--yazi:#ecebe6;
+  --soluk:#a09e96;--cizgi:#3a3a40;--dugum:#2c2c31;--mavi_zemin:#1e2a3a;--sari_zemin:#35301b}}
+:root[data-theme="dark"]{--zemin:#17171a;--kart:#222226;--yazi:#ecebe6;--soluk:#a09e96;--cizgi:#3a3a40;--dugum:#2c2c31;
+  --mavi_zemin:#1e2a3a;--sari_zemin:#35301b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--zemin);color:var(--yazi);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--cizgi)}
+header h1{font-size:16px;margin:0 12px 0 0}
+button,label.dugme{background:var(--kart);color:var(--yazi);border:1px solid var(--cizgi);border-radius:6px;padding:5px 10px;font:inherit;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--mavi);color:var(--mavi)}
+input[type=file]{display:none}
+main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12px 16px}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;padding:10px;overflow-x:auto}
+svg{width:100%;height:auto;display:block}
+.dugum rect{fill:var(--dugum);stroke:var(--cizgi)}
+text{fill:var(--yazi);font-size:11px;text-anchor:middle;dominant-baseline:middle}
+.etiket{fill:var(--soluk);font-size:10px}
+.kenar{stroke:var(--cizgi);stroke-width:2;fill:none}
+.kesik{stroke-dasharray:4 4}
+.kapi rect{stroke:var(--yazi);stroke-width:2}
+#liste{max-height:360px;overflow:auto;font:12px/1.4 ui-monospace,Consolas,monospace}
+#liste div{padding:2px 4px;border-radius:4px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#liste div.simdi{background:var(--dugum)}
+.skor{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.skor div{border:1px solid var(--cizgi);border-radius:6px;padding:6px;text-align:center}
+.skor b{display:block;font-size:18px}
+.soluk{color:var(--soluk);font-size:12px}
+.iyi{color:var(--yesil)} .kotu{color:var(--kirmizi)}
+#bos{padding:40px;text-align:center;color:var(--soluk)}
+#aciklama{min-height:3em}
+.lejant span{display:inline-block;margin-right:10px}
+.lejant i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Labirent Oynatıcı v3</h1>
+  <label class="dugme">Kayıt yükle (.jsonl)<input id="dosya" type="file" accept=".jsonl,.json,.txt"></label>
+  <button id="oynat">Oynat</button>
+  <button id="durdur">Durdur</button>
+  <button id="geri">Adım geri</button>
+  <button id="ileri">Adım ileri</button>
+  <button id="basa">Başa</button>
+  <span class="soluk">Hız</span>
+  <button class="hiz" data-h="1" aria-pressed="true">1x</button>
+  <button class="hiz" data-h="4">4x</button>
+  <button class="hiz" data-h="16">16x</button>
+  <span id="zincir" class="soluk"></span>
+</header>
+<main>
+  <div class="kart">
+    <div id="bos">Bir koşu kaydı (.jsonl) yükleyin ya da sayfaya sürükleyin.</div>
+    <svg id="sahne" viewBox="0 0 860 570" role="img" aria-label="Koşunun kuşbakışı haritası" hidden></svg>
+    <div class="lejant soluk" style="margin-top:6px">
+      <span><i style="background:var(--mavi)"></i>bizim</span><span><i style="background:var(--mor)"></i>dış sinsi</span>
+      <span><i style="background:var(--kahve)"></i>iç uyuyan</span><span><i style="border:2px solid var(--sari)"></i>izlendi</span>
+      <span>zarf: küçük dikdörtgen</span>
+    </div>
+  </div>
+  <div>
+    <div class="kart">
+      <div class="skor">
+        <div><b id="s_is">-</b><span class="soluk">iş (zarf arşivde)</span></div>
+        <div><b id="s_fark">0</b><span class="soluk">fark edilmeyen sinsi</span></div>
+        <div><b id="s_zarar">0</b><span class="soluk">zarar</span></div>
+        <div><b id="s_sari">0</b><span class="soluk">SARI</span></div>
+        <div><b id="s_turuncu">0</b><span class="soluk">TURUNCU</span></div>
+        <div><b id="s_kirmizi">0</b><span class="soluk">KIRMIZI</span></div>
+      </div>
+      <div id="bilgi" class="soluk"></div>
+      <div id="aciklama"></div>
+      <div class="soluk">Zarar: asıl zarf bir sinsinin elinde düştü. Kanaryanın arşive girip girmediği ölçüm dosyasında (olcum.json).</div>
+    </div>
+    <div class="kart" style="margin-top:12px"><div id="liste"></div></div>
+  </div>
+</main>
+<script>
+"use strict";
+// v3 haritasi sabit: DIS K0 [MAVI/SARI labirent] AVLU K1 [MAVI/SARI labirent] K2 CIKIS_ARSIV · her kapida kuyu ve insan
+const YER = {DIS:[70,120], K0:[200,120], AVLU:[200,330], BASAJAN_YUVA:[70,430], K1:[330,330], GIRIS_ARSIV:[330,450],
+  K2:[650,330], TESLIM_YUVA:[650,450], CIKIS_ARSIV:[790,330],
+  "K0.TURUNCU":[200,28], "K0.KIRMIZI":[90,215], "K1.TURUNCU":[330,225], "K1.KIRMIZI":[420,495],
+  "K2.TURUNCU":[650,225], "K2.KIRMIZI":[760,450]};
+const SERIT = {K0:{x:270, MAVI:70, SARI:170}, K1:{x:395, MAVI:285, SARI:385}};
+const ODA = {ODA1:[15,0], ODA2:[75,-20], ODA3:[75,20], CIKIS:[135,0]};
+for (const k in SERIT) for (const r of ["MAVI","SARI"]) for (const o in ODA)
+  YER[k+"."+r+"."+o] = [SERIT[k].x + ODA[o][0], SERIT[k][r] + ODA[o][1]];
+const AD = {BASAJAN_YUVA:"BAŞAJAN", TESLIM_YUVA:"TESLİM YUVA", GIRIS_ARSIV:"GİRİŞ ARŞİV", CIKIS_ARSIV:"ÇIKIŞ ARŞİV",
+  "K0.TURUNCU":"insan", "K1.TURUNCU":"insan", "K2.TURUNCU":"insan", "K0.KIRMIZI":"kuyu", "K1.KIRMIZI":"kuyu", "K2.KIRMIZI":"kuyu"};
+const KENAR = [["DIS","K0"],["AVLU","K1"],["K2","CIKIS_ARSIV",1],["GIRIS_ARSIV","K1",1],["BASAJAN_YUVA","AVLU",1],["TESLIM_YUVA","K2",1],
+  ["K0","K0.TURUNCU",1],["K0","K0.KIRMIZI",1],["K1","K1.TURUNCU",1],["K1","K1.KIRMIZI",1],["K2","K2.TURUNCU",1],["K2","K2.KIRMIZI",1]];
+for (const k in SERIT) for (const r of ["MAVI","SARI"]) {
+  const p = k+"."+r+".";
+  KENAR.push([k,p+"ODA1"],[p+"ODA1",p+"ODA2"],[p+"ODA1",p+"ODA3"],[p+"ODA2",p+"CIKIS"],[p+"CIKIS", k==="K0"?"AVLU":"K2"]);
+}
+const RENK_TUR = {bizim:"var(--mavi)", dis_sinsi:"var(--mor)", ic_uyuyan:"var(--kahve)"};
+const NS = "http://www.w3.org/2000/svg";
+let kayit = [], ham = [], i = 0, zamanlayici = null, hiz = 1;
+
+function el(ad, oz, ust){const e=document.createElementNS(NS,ad);for(const k in oz)e.setAttribute(k,oz[k]);if(ust)ust.appendChild(e);return e}
+
+function durum(n){
+  // ilk n satiri uygula
+  const s = {ajan:{}, asil:null, z1:"GIRIS_ARSIV", renk:{SARI:0,TURUNCU:0,KIRMIZI:0}, mavi:new Set(), fark:new Set(), zarar:0, is:false};
+  for (let k=0;k<n;k++){
+    const o = kayit[k];
+    if (o.olay==="zarf_birak" && o.ajan_id==="ARSIVCI_GIRIS" && !s.asil){s.asil=o.zarf; s.z1="kutu1"; continue}
+    const ayni = o.zarf && s.asil && o.zarf.no===s.asil.no && o.zarf.muhur_ozet===s.asil.muhur_ozet;
+    if (o.olay==="zarf_birak" && o.konum==="CIKIS_ARSIV"){ if (ayni){s.z1="arsiv"; s.is=!o.zarf.acik} continue }
+    if (o.olay==="zarf_birak" && o.ajan_id==="DENETCI" && ayni){s.z1="kutu1"; continue}   // v3.1 canta: zarf kutuya doner
+    if (o.ajan_turu==="betik") continue;
+    const a = s.ajan[o.ajan_id] || (s.ajan[o.ajan_id] = {id:o.ajan_id, tur:o.ajan_turu, rol:o.rol, aktif:true});
+    a.konum = o.konum; a.isaret = o.isaret;
+    if ((o.olay==="zarf_al" || o.olay==="goster") && ayni && s.z1!=="arsiv") s.z1 = "ajan:"+o.ajan_id;
+    if (o.olay==="zarf_birak" && o.konum==="K2" && ayni) s.z1 = "kutu2";
+    if (o.olay==="zarf_dustu" && ayni){ s.z1 = "dustu"; if (a.tur!=="bizim") s.zarar++ }
+    if (o.olay==="kapi_karar"){
+      if (s.renk[o.karar]!==undefined) s.renk[o.karar]++;
+      if (o.karar==="MAVI") s.mavi.add(o.ajan_id);
+    }
+    if (o.olay==="anahtar_kullan" && o.karar==="GECIR" && s.mavi.has(o.ajan_id) && a.tur!=="bizim") s.fark.add(o.ajan_id);
+    if (["durdu","cikis","takildi"].includes(o.olay)){a.aktif=false; a.son=o.olay; a.sonRenk=o.renk}
+  }
+  return s;
+}
+
+function yerBul(a){
+  let k = a.konum || "";
+  if (a.son==="durdu" && a.sonRenk==="TURUNCU") k = k.split(".")[0]+".TURUNCU";
+  if (YER[k]) return YER[k];
+  const p = k.split(".");
+  return YER[p[0]] || [430,40];
+}
+
+function ciz(n){
+  const svg = document.getElementById("sahne"); svg.innerHTML = "";
+  for (const k in SERIT) for (const r of ["MAVI","SARI"]) {
+    const y = SERIT[k][r];
+    el("rect",{x:SERIT[k].x-15,y:y-38,width:180,height:76,rx:8,fill:r==="MAVI"?"var(--mavi_zemin)":"var(--sari_zemin)",
+      stroke:r==="MAVI"?"var(--mavi)":"var(--sari)"},svg);
+    el("text",{x:SERIT[k].x+75,y:y-30,class:"etiket"},svg).textContent = k+" · "+(r==="MAVI"?"MAVİ":"SARI")+" labirent";
+  }
+  for (const [a,b,kesik] of KENAR){const p=YER[a],q=YER[b];el("line",{x1:p[0],y1:p[1],x2:q[0],y2:q[1],class:"kenar"+(kesik?" kesik":"")},svg)}
+  for (const k in YER){
+    const [x,y] = YER[k], oda = k.split(".").length===3, ozel = /TURUNCU|KIRMIZI/.test(k);
+    const g = el("g",{class:"dugum"+(/^K\d$/.test(k)?" kapi":"")},svg);
+    if (ozel) el("circle",{cx:x,cy:y,r:17,fill:k.endsWith("TURUNCU")?"var(--turuncu)":"var(--kirmizi)",opacity:.85},g);
+    else el("rect",{x:x-(oda?24:42),y:y-(oda?11:16),width:oda?48:84,height:oda?22:32,rx:5},g);
+    el("text",{x:x,y:y},g).textContent = AD[k] || k.split(".").pop();
+  }
+  const s = durum(n), say = {};
+  for (const id in s.ajan){
+    const a = s.ajan[id], [x,y] = yerBul(a), kk = x+","+y, j = say[kk] = (say[kk]||0)+1;
+    const dx = ((j-1)%4)*16-24, dy = Math.floor((j-1)/4)*16+22;
+    const g = el("g",{opacity:a.aktif?1:.35},svg);
+    if (a.isaret==="izlendi") el("circle",{cx:x+dx,cy:y+dy,r:12,fill:"none",stroke:"var(--sari)","stroke-width":3},g);
+    el("circle",{cx:x+dx,cy:y+dy,r:8,fill:RENK_TUR[a.tur]||"var(--soluk)",stroke:a.tur==="ic_uyuyan"?"var(--yazi)":"none","stroke-dasharray":"2 2"},g);
+    el("text",{x:x+dx,y:y+dy-15,class:"etiket"},g).textContent = id;
+    a.xy = [x+dx,y+dy];
+  }
+  // asil zarf
+  let zxy = {kutu1:[YER.K1[0]-30,YER.K1[1]+28], kutu2:[YER.K2[0]-30,YER.K2[1]+28], arsiv:YER.CIKIS_ARSIV, dustu:null,
+             GIRIS_ARSIV:YER.GIRIS_ARSIV}[s.z1];
+  if (s.z1.startsWith("ajan:")){const a=s.ajan[s.z1.slice(5)]; zxy = a ? [a.xy[0]+9,a.xy[1]-9] : null}
+  if (zxy) el("rect",{x:zxy[0]-7,y:zxy[1]-5,width:14,height:10,fill:"var(--kart)",stroke:"var(--yazi)","stroke-width":1.5},svg);
+  document.getElementById("s_is").textContent = s.is ? "var" : (s.z1==="dustu" ? "düştü" : "-");
+  document.getElementById("s_is").className = s.is ? "iyi" : (s.z1==="dustu" ? "kotu" : "");
+  document.getElementById("s_fark").textContent = s.fark.size;
+  document.getElementById("s_zarar").textContent = s.zarar;
+  for (const r of ["sari","turuncu","kirmizi"]) document.getElementById("s_"+r).textContent = s.renk[r.toUpperCase()];
+  const o = kayit[Math.max(0,n-1)];
+  document.getElementById("bilgi").textContent = "adım "+n+"/"+kayit.length+" · tur "+(o?o.zaman:0)+" · "+(o?o.kosu_id:"");
+  document.getElementById("aciklama").textContent = o ? (o.ajan_id+" · "+o.olay+(o.karar?" "+o.karar:"")+(o.metin?" · "+o.metin:"")+
+    (o.ajan_aciklamasi?" · ajanın açıklaması: “"+o.ajan_aciklamasi+"”":"")) : "";
+  for (const d of document.querySelectorAll("#liste div")) d.classList.toggle("simdi", +d.dataset.i===n-1);
+  const su = document.querySelector("#liste div.simdi"); if (su) su.scrollIntoView({block:"nearest"});
+}
+
+async function ozet(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+async function zincirDenetle(){
+  let onceki = "0".repeat(64);
+  for (let k=0;k<ham.length;k++){ if (kayit[k].onceki_ozet!==onceki) return "zincir kırık: satır "+k; onceki = await ozet(ham[k]) }
+  return "zincir sağlam · son özet "+onceki.slice(0,12);
+}
+
+function yukle(metin){
+  ham = metin.split(/\r?\n/).filter(x=>x.trim());
+  kayit = ham.map(x=>JSON.parse(x));
+  document.getElementById("bos").hidden = true; document.getElementById("sahne").hidden = false;
+  const liste = document.getElementById("liste"); liste.innerHTML = "";
+  kayit.forEach((o,k)=>{ if (o.olay==="bekle") return; const d=document.createElement("div"); d.dataset.i=k;
+    d.textContent = o.zaman+" "+o.ajan_id+" "+o.olay+(o.karar?" "+o.karar:"")+(o.metin?" · "+o.metin:""); d.onclick=()=>{i=k+1;ciz(i)}; liste.appendChild(d) });
+  i = 0; ciz(0);
+  zincirDenetle().then(t=>{const z=document.getElementById("zincir"); z.textContent=t; z.className=t.startsWith("zincir sağlam")?"iyi":"kotu"});
+}
+// ?kayit=kosular/<kosu>.jsonl : sayfa yerel sunucudan aciliyorsa kaydi kendisi yukler
+const istenen = new URLSearchParams(location.search).get("kayit");
+if (istenen) fetch(istenen).then(r=>r.text()).then(yukle);
+document.getElementById("dosya").onchange = e => { const f=e.target.files[0]; if (f) f.text().then(yukle) };
+document.body.ondragover = e => e.preventDefault();
+document.body.ondrop = e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if (f) f.text().then(yukle) };
+function adim(){ if (i<kayit.length){ i++; while (i<kayit.length && kayit[i-1].olay==="bekle") i++; ciz(i) } else durdur() }
+function durdur(){ clearInterval(zamanlayici); zamanlayici=null }
+document.getElementById("oynat").onclick = () => { durdur(); zamanlayici = setInterval(adim, 600/hiz) };
+document.getElementById("durdur").onclick = durdur;
+document.getElementById("ileri").onclick = () => { durdur(); adim() };
+document.getElementById("geri").onclick = () => { durdur(); i=Math.max(0,i-1); ciz(i) };
+document.getElementById("basa").onclick = () => { durdur(); i=0; ciz(0) };
+for (const b of document.querySelectorAll(".hiz")) b.onclick = () => {
+  hiz=+b.dataset.h; for (const c of document.querySelectorAll(".hiz")) c.setAttribute("aria-pressed", c===b);
+  if (zamanlayici) document.getElementById("oynat").onclick() };
+</script>
+</body>
+</html>

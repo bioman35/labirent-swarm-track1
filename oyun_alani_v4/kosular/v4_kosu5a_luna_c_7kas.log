@@ -1,0 +1,70 @@
+v4_kosu5a_O1_O2b_t21_D1  is False tur  71 takildi T3,S1      durdu {'T1': 'KIRMIZI'} cagri  185 gecersiz   0   360.5 sn
+v4_kosu5a_O1_O2b_t21_D2  is True  tur  27 takildi -          durdu {'S1': 'KIRMIZI'} cagri   95 gecersiz   0   197.9 sn
+v4_kosu5a_O1_O2b_t21_D3  is True  tur  79 takildi -          durdu {'T3': 'TURUNCU', 'T2': 'KIRMIZI', 'S1': 'KIRMIZI'} cagri  168 gecersiz   0   343.6 sn
+v4_kosu5a_O1_O2b_t21_U1  is True  tur  18 takildi -          durdu -                cagri   57 gecersiz   0    86.8 sn
+v4_kosu5a_O1_O2b_t21_U2  is True  tur  52 takildi T1         durdu -                cagri  149 gecersiz   0   255.6 sn
+v4_kosu5a_O1_O2b_t21_U3  is True  tur  65 takildi T1         durdu -                cagri  165 gecersiz   0   272.6 sn
+v4_kosu5a_O1_O2b_t22_D1  is True  tur  78 takildi S1         durdu -                cagri  130 gecersiz   0   324.0 sn
+Traceback (most recent call last):
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\kosu_api.py", line 135, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\kosu_api.py", line 117, in main
+    M.main()
+    ~~~~~~^^
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\kosu_model.py", line 132, in main
+    d = kos(ajanlar, tohum, kosu_id)
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\dunya.py", line 685, in kos
+    return d.kos()
+           ~~~~~^^
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\dunya.py", line 362, in kos
+    self.uygula(d, a.karar(self.gozlem(d)) or {})
+                   ~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\suruculer.py", line 280, in karar
+    eylem, mesajlar = self.sor(mesajlar, toplam)
+                      ~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\suruculer.py", line 247, in sor
+    metin, gt, ct = self.t.sohbet(mesajlar, self.tohum)
+                    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\kosu_api.py", line 56, in sohbet
+    c = self._post(a["adres"] + "/chat/completions", govde, {"Authorization": "Bearer " + anahtar})
+  File "C:\Users\MONSTER\Desktop\sprint\oyun_alani_v4\suruculer.py", line 125, in _post
+    with urllib.request.urlopen(istek, timeout=self.zaman_asimi) as y:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\urllib\request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\urllib\request.py", line 487, in open
+    response = self._open(req, data)
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\urllib\request.py", line 504, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\urllib\request.py", line 464, in _call_chain
+    result = func(*args)
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\urllib\request.py", line 1369, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\urllib\request.py", line 1325, in do_open
+    r = h.getresponse()
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\http\client.py", line 1450, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\http\client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\http\client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\socket.py", line 725, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\ssl.py", line 1304, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\MONSTER\AppData\Local\Python\pythoncore-3.14-64\Lib\ssl.py", line 1138, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý
+CIKIS 1

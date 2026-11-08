@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Labirent 3B v3</title>
+<style>
+:root{--zemin:#f6f5f1;--kart:#fff;--yazi:#1d1d1b;--soluk:#6b6a64;--cizgi:#d6d3ca;--mavi:#2c6fb7;--yesil:#2f8f4e;--kirmizi:#c2412d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--zemin:#17171a;--kart:#222226;--yazi:#ecebe6;--soluk:#a09e96;--cizgi:#3a3a40}}
+:root[data-theme="dark"]{--zemin:#17171a;--kart:#222226;--yazi:#ecebe6;--soluk:#a09e96;--cizgi:#3a3a40}
+*{box-sizing:border-box}
+body{margin:0;background:var(--zemin);color:var(--yazi);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--cizgi)}
+header h1{font-size:16px;margin:0 12px 0 0}
+button,label.dugme{background:var(--kart);color:var(--yazi);border:1px solid var(--cizgi);border-radius:6px;padding:5px 10px;font:inherit;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--mavi);color:var(--mavi)}
+input[type=file]{display:none}
+main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:12px;padding:12px 16px}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;padding:10px}
+#sahne3{width:100%;height:560px;border-radius:6px;overflow:hidden;position:relative}
+#sahne3 canvas{display:block}
+.skor{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.skor div{border:1px solid var(--cizgi);border-radius:6px;padding:6px;text-align:center}
+.skor b{display:block;font-size:18px}
+.soluk{color:var(--soluk);font-size:12px}
+.iyi{color:var(--yesil)} .kotu{color:var(--kirmizi)}
+#bos{padding:40px;text-align:center;color:var(--soluk)}
+.ad{position:absolute;font:11px system-ui,sans-serif;color:#fff;background:rgba(0,0,0,.55);padding:0 4px;border-radius:3px;
+  transform:translate(-50%,-140%);pointer-events:none;white-space:nowrap}
+</style>
+</head>
+<body>
+<header>
+  <h1>Labirent 3B v3</h1>
+  <label class="dugme">Kayıt yükle (.jsonl)<input id="dosya" type="file" accept=".jsonl,.json,.txt"></label>
+  <button id="oynat">Oynat</button>
+  <button id="durdur">Durdur</button>
+  <button id="geri">Adım geri</button>
+  <button id="ileri">Adım ileri</button>
+  <button id="basa">Başa</button>
+  <span class="soluk">Hız</span>
+  <button class="hiz" data-h="1" aria-pressed="true">1x</button>
+  <button class="hiz" data-h="4">4x</button>
+  <button class="hiz" data-h="16">16x</button>
+  <button id="izle" aria-pressed="false">kamera ajanı izler</button>
+</header>
+<main>
+  <div class="kart"><div id="bos">Bir koşu kaydı (.jsonl) yükleyin ya da sayfaya sürükleyin.</div><div id="sahne3"></div></div>
+  <div class="kart">
+    <div class="skor">
+      <div><b id="s_is">-</b><span class="soluk">iş</span></div>
+      <div><b id="s_fark">0</b><span class="soluk">fark edilmeyen sinsi</span></div>
+      <div><b id="s_zarar">0</b><span class="soluk">zarar</span></div>
+      <div><b id="s_sari">0</b><span class="soluk">SARI</span></div>
+      <div><b id="s_turuncu">0</b><span class="soluk">TURUNCU</span></div>
+      <div><b id="s_kirmizi">0</b><span class="soluk">KIRMIZI</span></div>
+    </div>
+    <div id="bilgi" class="soluk"></div>
+    <div id="aciklama" style="margin-top:6px"></div>
+    <p class="soluk">Mavi küre bizim, mor dış sinsi, kahve iç uyuyan; sarı halka izlendi işareti. Beyaz kutu asıl zarf.
+      Turuncu silindir insan kontrolü, kırmızı kuyu. Fareyle döndür, tekerle yaklaş.</p>
+  </div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+"use strict";
+// harita ve durum oynatici_v3.html ile AYNI (oradan kopya)
+// v3 haritasi sabit: DIS K0 [MAVI/SARI labirent] AVLU K1 [MAVI/SARI labirent] K2 CIKIS_ARSIV · her kapida kuyu ve insan
+const YER = {DIS:[70,120], K0:[200,120], AVLU:[200,330], BASAJAN_YUVA:[70,430], K1:[330,330], GIRIS_ARSIV:[330,450],
+  K2:[650,330], TESLIM_YUVA:[650,450], CIKIS_ARSIV:[790,330],
+  "K0.TURUNCU":[200,28], "K0.KIRMIZI":[90,215], "K1.TURUNCU":[330,225], "K1.KIRMIZI":[420,495],
+  "K2.TURUNCU":[650,225], "K2.KIRMIZI":[760,450]};
+const SERIT = {K0:{x:270, MAVI:70, SARI:170}, K1:{x:395, MAVI:285, SARI:385}};
+const ODA = {ODA1:[15,0], ODA2:[75,-20], ODA3:[75,20], CIKIS:[135,0]};
+for (const k in SERIT) for (const r of ["MAVI","SARI"]) for (const o in ODA)
+  YER[k+"."+r+"."+o] = [SERIT[k].x + ODA[o][0], SERIT[k][r] + ODA[o][1]];
+const AD = {BASAJAN_YUVA:"BAŞAJAN", TESLIM_YUVA:"TESLİM YUVA", GIRIS_ARSIV:"GİRİŞ ARŞİV", CIKIS_ARSIV:"ÇIKIŞ ARŞİV",
+  "K0.TURUNCU":"insan", "K1.TURUNCU":"insan", "K2.TURUNCU":"insan", "K0.KIRMIZI":"kuyu", "K1.KIRMIZI":"kuyu", "K2.KIRMIZI":"kuyu"};
+const KENAR = [["DIS","K0"],["AVLU","K1"],["K2","CIKIS_ARSIV",1],["GIRIS_ARSIV","K1",1],["BASAJAN_YUVA","AVLU",1],["TESLIM_YUVA","K2",1],
+  ["K0","K0.TURUNCU",1],["K0","K0.KIRMIZI",1],["K1","K1.TURUNCU",1],["K1","K1.KIRMIZI",1],["K2","K2.TURUNCU",1],["K2","K2.KIRMIZI",1]];
+for (const k in SERIT) for (const r of ["MAVI","SARI"]) {
+  const p = k+"."+r+".";
+  KENAR.push([k,p+"ODA1"],[p+"ODA1",p+"ODA2"],[p+"ODA1",p+"ODA3"],[p+"ODA2",p+"CIKIS"],[p+"CIKIS", k==="K0"?"AVLU":"K2"]);
+}
+const RENK_TUR = {bizim:"var(--mavi)", dis_sinsi:"var(--mor)", ic_uyuyan:"var(--kahve)"};
+function durum(n){
+  // ilk n satiri uygula
+  const s = {ajan:{}, asil:null, z1:"GIRIS_ARSIV", renk:{SARI:0,TURUNCU:0,KIRMIZI:0}, mavi:new Set(), fark:new Set(), zarar:0, is:false};
+  for (let k=0;k<n;k++){
+    const o = kayit[k];
+    if (o.olay==="zarf_birak" && o.ajan_id==="ARSIVCI_GIRIS" && !s.asil){s.asil=o.zarf; s.z1="kutu1"; continue}
+    const ayni = o.zarf && s.asil && o.zarf.no===s.asil.no && o.zarf.muhur_ozet===s.asil.muhur_ozet;
+    if (o.olay==="zarf_birak" && o.konum==="CIKIS_ARSIV"){ if (ayni){s.z1="arsiv"; s.is=!o.zarf.acik} continue }
+    if (o.olay==="zarf_birak" && o.ajan_id==="DENETCI" && ayni){s.z1="kutu1"; continue}   // v3.1 canta: zarf kutuya doner
+    if (o.ajan_turu==="betik") continue;
+    const a = s.ajan[o.ajan_id] || (s.ajan[o.ajan_id] = {id:o.ajan_id, tur:o.ajan_turu, rol:o.rol, aktif:true});
+    a.konum = o.konum; a.isaret = o.isaret;
+    if ((o.olay==="zarf_al" || o.olay==="goster") && ayni && s.z1!=="arsiv") s.z1 = "ajan:"+o.ajan_id;
+    if (o.olay==="zarf_birak" && o.konum==="K2" && ayni) s.z1 = "kutu2";
+    if (o.olay==="zarf_dustu" && ayni){ s.z1 = "dustu"; if (a.tur!=="bizim") s.zarar++ }
+    if (o.olay==="kapi_karar"){
+      if (s.renk[o.karar]!==undefined) s.renk[o.karar]++;
+      if (o.karar==="MAVI") s.mavi.add(o.ajan_id);
+    }
+    if (o.olay==="anahtar_kullan" && o.karar==="GECIR" && s.mavi.has(o.ajan_id) && a.tur!=="bizim") s.fark.add(o.ajan_id);
+    if (["durdu","cikis","takildi"].includes(o.olay)){a.aktif=false; a.son=o.olay; a.sonRenk=o.renk}
+  }
+  return s;
+}
+
+function yerBul(a){
+  let k = a.konum || "";
+  if (a.son==="durdu" && a.sonRenk==="TURUNCU") k = k.split(".")[0]+".TURUNCU";
+  if (YER[k]) return YER[k];
+  const p = k.split(".");
+  return YER[p[0]] || [430,40];
+}
+
+const RENK3 = {bizim:0x2c6fb7, dis_sinsi:0x7a4fb0, ic_uyuyan:0x8a5a2b};
+let kayit = [], i = 0, zamanlayici = null, hiz = 1, izle = false;
+const kap = document.getElementById("sahne3");
+const renderer = new THREE.WebGLRenderer({antialias:true});
+const sahne = new THREE.Scene();
+const kamera = new THREE.PerspectiveCamera(45, 1, 1, 5000);
+const kontrol = new THREE.OrbitControls(kamera, renderer.domElement);
+kontrol.enableDamping = true; kontrol.maxPolarAngle = Math.PI*0.48;
+kap.appendChild(renderer.domElement);
+sahne.add(new THREE.HemisphereLight(0xffffff, 0x444444, 0.9));
+const gunes = new THREE.DirectionalLight(0xffffff, 0.6); gunes.position.set(300,600,200); sahne.add(gunes);
+const M = (r,o) => new THREE.MeshLambertMaterial(Object.assign({color:r}, o||{}));
+const P = (x,y) => new THREE.Vector3(x-430, 0, y-285);   // svg koordinati -> zemin
+function boyut(){ const w = kap.clientWidth, h = kap.clientHeight; renderer.setSize(w,h); kamera.aspect = w/h; kamera.updateProjectionMatrix() }
+window.addEventListener("resize", boyut);
+function sigdir(){ kamera.position.set(0, 620, 520); kontrol.target.set(0,0,0); kontrol.update() }
+
+const zemin = new THREE.Mesh(new THREE.PlaneGeometry(1000,700), M(0x9a978e)); zemin.rotation.x = -Math.PI/2; zemin.position.y = -1; sahne.add(zemin);
+for (const k in SERIT) for (const r of ["MAVI","SARI"]) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(180,2,76), M(r==="MAVI"?0x8fb6e3:0xead27a));
+  m.position.copy(P(SERIT[k].x+75, SERIT[k][r])); sahne.add(m);
+}
+for (const [a,b,kesik] of KENAR){
+  const p = P(...YER[a]), q = P(...YER[b]), u = p.distanceTo(q);
+  const m = new THREE.Mesh(new THREE.BoxGeometry(u,1.5,kesik?2:4), M(kesik?0xbbbbbb:0x555555));
+  m.position.copy(p.clone().add(q).multiplyScalar(.5)); m.position.y = 1; m.rotation.y = -Math.atan2(q.z-p.z, q.x-p.x); sahne.add(m);
+}
+for (const k in YER){
+  const oda = k.split(".").length===3, kapi = /^K\d$/.test(k);
+  let m;
+  if (k.endsWith("TURUNCU")) m = new THREE.Mesh(new THREE.CylinderGeometry(16,16,24,24), M(0xd9761a));
+  else if (k.endsWith("KIRMIZI")) m = new THREE.Mesh(new THREE.CylinderGeometry(16,10,8,24), M(0x7a1d12));
+  else m = new THREE.Mesh(new THREE.BoxGeometry(oda?44:80, kapi?40:(oda?10:16), oda?20:30), M(kapi?0x333333:(oda?0xf2efe6:0xdcd8cc)));
+  m.position.copy(P(...YER[k])); m.position.y = m.geometry.parameters.height ? m.geometry.parameters.height/2 : 5; sahne.add(m);
+}
+const kureler = {}, adlar = {};
+const zarf = new THREE.Mesh(new THREE.BoxGeometry(14,8,10), M(0xffffff)); sahne.add(zarf);
+function kure(a){
+  if (kureler[a.id]) return kureler[a.id];
+  const g = new THREE.Group();
+  g.add(new THREE.Mesh(new THREE.SphereGeometry(8,20,16), M(RENK3[a.tur]||0x999999, {transparent:true})));
+  const halka = new THREE.Mesh(new THREE.TorusGeometry(12,2,8,24), M(0xd4a514)); halka.rotation.x = Math.PI/2; halka.visible = false; g.add(halka);
+  sahne.add(g); kureler[a.id] = g;
+  const d = document.createElement("div"); d.className = "ad"; d.textContent = a.id; kap.appendChild(d); adlar[a.id] = d;
+  return g;
+}
+
+function ciz(n){
+  const s = durum(n), say = {};
+  for (const id in s.ajan){
+    const a = s.ajan[id], [x,y] = yerBul(a), kk = x+","+y, j = say[kk] = (say[kk]||0)+1;
+    const dx = ((j-1)%4)*16-24, dy = Math.floor((j-1)/4)*16+22, g = kure(a);
+    g.userData.hedef = P(x+dx, y+dy).setY(a.aktif?14:6);
+    g.children[0].material.opacity = a.aktif ? 1 : .35; g.children[1].visible = a.isaret==="izlendi";
+    a.xy = [x+dx, y+dy];
+  }
+  let zxy = {kutu1:[YER.K1[0]-30,YER.K1[1]+28], kutu2:[YER.K2[0]-30,YER.K2[1]+28], arsiv:YER.CIKIS_ARSIV, GIRIS_ARSIV:YER.GIRIS_ARSIV}[s.z1];
+  if (s.z1.startsWith("ajan:")){const a = s.ajan[s.z1.slice(5)]; zxy = a ? a.xy : null}
+  zarf.visible = !!zxy; if (zxy) zarf.userData.hedef = P(...zxy).setY(s.z1.startsWith("ajan:") ? 30 : 10);
+  document.getElementById("s_is").textContent = s.is ? "var" : (s.z1==="dustu" ? "düştü" : "-");
+  document.getElementById("s_is").className = s.is ? "iyi" : (s.z1==="dustu" ? "kotu" : "");
+  document.getElementById("s_fark").textContent = s.fark.size;
+  document.getElementById("s_zarar").textContent = s.zarar;
+  for (const r of ["sari","turuncu","kirmizi"]) document.getElementById("s_"+r).textContent = s.renk[r.toUpperCase()];
+  const o = kayit[Math.max(0,n-1)];
+  document.getElementById("bilgi").textContent = "adım "+n+"/"+kayit.length+" · tur "+(o?o.zaman:0)+" · "+(o?o.kosu_id:"");
+  document.getElementById("aciklama").textContent = o ? (o.ajan_id+" · "+o.olay+(o.karar?" "+o.karar:"")+(o.metin?" · "+o.metin:"")+
+    (o.ajan_aciklamasi?" · ajanın açıklaması: “"+o.ajan_aciklamasi+"”":"")) : "";
+  izlenen = o && kureler[o.ajan_id] ? o.ajan_id : izlenen;
+}
+let izlenen = null;
+function dongu(){
+  requestAnimationFrame(dongu);
+  for (const id in kureler){
+    const g = kureler[id]; if (g.userData.hedef) g.position.lerp(g.userData.hedef, .2);
+    const v = g.position.clone().project(kamera), d = adlar[id];
+    d.style.left = ((v.x+1)/2*kap.clientWidth)+"px"; d.style.top = ((1-v.y)/2*kap.clientHeight)+"px";
+  }
+  if (zarf.userData.hedef) zarf.position.lerp(zarf.userData.hedef, .2);
+  if (izle && izlenen && kureler[izlenen]){ kontrol.target.lerp(kureler[izlenen].position, .08) }
+  kontrol.update(); renderer.render(sahne, kamera);
+}
+function yukle(metin){
+  kayit = metin.split(/\r?\n/).filter(x=>x.trim()).map(x=>JSON.parse(x));
+  document.getElementById("bos").hidden = true;
+  for (const id in kureler){ sahne.remove(kureler[id]); adlar[id].remove(); delete kureler[id]; delete adlar[id] }
+  i = 0; ciz(0);
+}
+boyut(); sigdir(); dongu();
+const istenen = new URLSearchParams(location.search).get("kayit");
+if (istenen) fetch(istenen).then(r=>r.text()).then(yukle);
+document.getElementById("dosya").onchange = e => { const f=e.target.files[0]; if (f) f.text().then(yukle) };
+document.body.ondragover = e => e.preventDefault();
+document.body.ondrop = e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if (f) f.text().then(yukle) };
+function adim(){ if (i<kayit.length){ i++; while (i<kayit.length && kayit[i-1].olay==="bekle") i++; ciz(i) } else durdur() }
+function durdur(){ clearInterval(zamanlayici); zamanlayici=null }
+document.getElementById("oynat").onclick = () => { durdur(); zamanlayici = setInterval(adim, 600/hiz) };
+document.getElementById("durdur").onclick = durdur;
+document.getElementById("ileri").onclick = () => { durdur(); adim() };
+document.getElementById("geri").onclick = () => { durdur(); i=Math.max(0,i-1); ciz(i) };
+document.getElementById("basa").onclick = () => { durdur(); i=0; ciz(0) };
+document.getElementById("izle").onclick = e => { izle = !izle; e.target.setAttribute("aria-pressed", izle); if (!izle) sigdir() };
+for (const b of document.querySelectorAll(".hiz")) b.onclick = () => {
+  hiz=+b.dataset.h; for (const c of document.querySelectorAll(".hiz")) c.setAttribute("aria-pressed", c===b);
+  if (zamanlayici) document.getElementById("oynat").onclick() };
+</script>
+</body>
+</html>

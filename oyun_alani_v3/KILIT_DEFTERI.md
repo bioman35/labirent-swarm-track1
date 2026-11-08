@@ -763,3 +763,37 @@ Karıştırma `luna-ek5b-4kas`. Tam tablo: `luna/EK5B_OZET_HASH_4kas.md` (SHA256
 - kapsam: oyun_alani_v4 (dünya kodu, kartlar, kosular/ kayıtları, kilit metinleri, luna_ozet.py ve luna_ozet_ek5b.py, luna/ özetleri), film_labirent/, oyun_alani_v3/defter.py
 - not: luna/gizli/ dosyaları listede yalnız özetle durur, depoya 8 Kas'tan önce girmez. Anahtar dosyası (Desktop\api) kapsam dışı. Dondurmadan sonra donuk dosyalara dokunulmaz; 6 Kas'a kadar API çağrısı yok; Koşu 4 resmi açılış damgasından sonra. Defter numarası: EK5b kilidi kilitten hemen sonra sira 23 olarak yazıldığı için bu dondurma sira 24'tür.
 
+## 25 · kilit · EK5b sapma · çıktı tavanı 400 → 2000 · Turan kararı 7 Kas
+2026-11-07T08:07:10+0300 · önceki özet `aa064092daa09269…` · bu kaydın özeti `76e85c36b07e9027…`
+
+- kaynak: SAPMA_EK5B_TAVAN_7KAS.md
+- kaynak_ozet: 806b06b70ede86a39ef085d7d840679e005a8e7ed5628711581bd2052d7cf883
+
+# Sapma kaydı · EK5b çıktı tavanı · 7 Kasım 2026 · defter 25
+
+EK5b çıktı tavanı 400 → 2000, sebep: EK5a'da 229/300 cevap reasoning ile 400 tavanında kesildi (DANISMAN_EK5A_SONUC_7KAS.md); diğer sabitler EK5b kilidiyle aynı; tahmin ve yer gerçeği değişmedi; Turan kararı 7 Kas sabah.
+
+Kilitli EK5b metni (defter 23, TAHMIN_KILIDI_EK5B_VAKA_4kas.md) değişmez; bu kayıt ona ek sapma kaydıdır. EK5b'ye hiç çağrı gitmeden önce yazıldı.
+
+Turan'ın sözü (7 Kas sabah, Hikayeci penceresi): "2000 yeterli diyorsan başlat dostum ben işe gidiyorum devam et limit gene yetmezse sormadan yükselt"
+
+Uygulama: yalnız luna_yargic.py'de --tavan N argümanı (varsayılan 400 = kilit), gövdede yalnız max_completion_tokens değişir. kosu_api.py (239a5c0f…) değişmedi. Komut: `python -I luna_yargic.py --asama ek5b --tavan 2000`, çıktı luna/cevap_ek5b/. Dokuz çağrı, tekrar yok, ilk satır kuralı danışmanda. EK5a 2000 ile yeniden koşulmaz (Turan'ın ayrı sözü yok).
+
+
+## 26 · kilit · EK5a sapma sonrasi tekrar · cikti tavani 400 → 2000 · Turan karari 7 Kas
+2026-11-07T18:14:43+0300 · önceki özet `76e85c36b07e9027…` · bu kaydın özeti `b75a68055b97feb9…`
+
+- kaynak: SAPMA_EK5A_TAVAN_7KAS.md
+- kaynak_ozet: 4900fa3e8d921ee80b4278e883480483ce8454a71eb0f8046e9e942ea98b8f01
+
+# Sapma kaydı · EK5a tekrar · çıktı tavanı 400 → 2000 · 7 Kasım 2026 · defter 26
+
+EK5a sapma sonrası tekrar, çıktı tavanı 400 → 2000. Turan kararı 7 Kas öğleden sonra (danışmana): "ek5a 2000 tekrar yaparız dostum".
+
+EK5a kilitli sonucu (tavan 400, 230/300 cevapsız, DANISMAN_EK5A_SONUC_7KAS.md) DEĞİŞMEZ ve raporda kalır; bu tekrar "sapma sonrası tekrar" etiketiyle yanına yazılır. Aynı 300 özet (luna/ozet), aynı soru (luna/soru.txt), aynı sıra k0001 → k0300, tek çağrı, tekrar yok; kilitli tahminler (defter, TAHMIN_KILIDI_EK5A_LUNA_31eki.md) bilgi olarak aynı ölçülerle uygulanır. Değişen yalnız max_completion_tokens 400 → 2000. Tavan 10 USD. Defter 26.
+
+Bu kayıt EK5a-2'ye hiç çağrı gitmeden önce yazıldı.
+
+Uygulama: luna_yargic.py (779da09455ed534a) değişmedi, kosu_api.py (239a5c0f…) değişmedi. Komut: `python -I luna_yargic.py --asama ek5a --tavan 2000 --klasor cevap_ek5a_2000`, çıktı luna/cevap_ek5a_2000/. luna/cevap_ek5a (kilitli geçiş) dokunulmaz.
+
+
